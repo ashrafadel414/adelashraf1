@@ -3,781 +3,301 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>نظام الرواتب - Material Design Dark</title>
-    
-    <!-- Google Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <title>نظام الرواتب والأوفر تايم</title>
     <style>
-        /* ===== CSS Variables - Material Design 3 Dark ===== */
-        :root {
-            --md-primary: #BB86FC;
-            --md-on-primary: #000000;
-            --md-primary-container: #3700B3;
-            --md-secondary: #03DAC6;
-            --md-on-secondary: #000000;
-            --md-background: #121212;
-            --md-surface: #1E1E1E;
-            --md-surface-variant: #2C2C2C;
-            --md-surface-container: #2A2A2A;
-            --md-surface-container-high: #333333;
-            --md-on-surface: #E1E1E1;
-            --md-on-surface-variant: #CACACA;
-            --md-outline: #484848;
-            --md-error: #CF6679;
-            --md-on-error: #000000;
-            --md-shadow: rgba(0, 0, 0, 0.6);
-            
-            --md-elevation-1: 0 2px 8px rgba(0,0,0,0.4);
-            --md-elevation-2: 0 4px 16px rgba(0,0,0,0.5);
-            --md-elevation-3: 0 8px 24px rgba(0,0,0,0.6);
-            
-            --md-radius: 16px;
-            --md-radius-sm: 12px;
-            --md-radius-xs: 8px;
-            
-            --md-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        /* ===== Reset & Base ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Tahoma', 'Arial', sans-serif;
         }
 
         body {
-            font-family: 'Inter', 'Tahoma', sans-serif;
-            background: var(--md-background);
-            color: var(--md-on-surface);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            padding: 24px;
-            background-image: 
-                radial-gradient(ellipse at 20% 50%, rgba(187, 134, 252, 0.05) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(3, 218, 198, 0.05) 0%, transparent 60%);
+            align-items: center;
+            padding: 20px;
         }
 
-        /* ===== Scrollbar Styling ===== */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: var(--md-surface);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: var(--md-primary);
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--md-secondary);
-        }
-
-        /* ===== Container ===== */
-        .app-container {
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 500px;
             width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
-        /* ===== Material Card ===== */
-        .md-card {
-            background: var(--md-surface);
-            border-radius: var(--md-radius);
-            padding: 28px 32px;
-            box-shadow: var(--md-elevation-1);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            transition: var(--md-transition);
-            margin-bottom: 24px;
-        }
-
-        .md-card:hover {
-            box-shadow: var(--md-elevation-2);
-            border-color: rgba(187, 134, 252, 0.15);
-        }
-
-        /* ===== Typography ===== */
-        .md-title-large {
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 25px;
             font-size: 28px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-            color: var(--md-on-surface);
         }
 
-        .md-title-medium {
-            font-size: 20px;
-            font-weight: 500;
-            color: var(--md-on-surface);
-        }
-
-        .md-title-small {
-            font-size: 16px;
-            font-weight: 500;
-            color: var(--md-on-surface-variant);
-        }
-
-        .md-body-large {
-            font-size: 16px;
-            font-weight: 400;
-            color: var(--md-on-surface-variant);
-            line-height: 1.6;
-        }
-
-        /* ===== Input Fields - Material Style ===== */
-        .md-input-group {
-            position: relative;
+        .form-group {
             margin-bottom: 20px;
         }
 
-        .md-input-group label {
+        label {
             display: block;
-            font-size: 13px;
-            font-weight: 500;
-            color: var(--md-on-surface-variant);
-            margin-bottom: 6px;
-            letter-spacing: 0.3px;
+            font-weight: bold;
+            color: #555;
+            margin-bottom: 5px;
         }
 
-        .md-input {
+        input {
             width: 100%;
-            padding: 14px 16px;
-            background: var(--md-surface-container);
-            border: 2px solid var(--md-outline);
-            border-radius: var(--md-radius-xs);
-            color: var(--md-on-surface);
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
             font-size: 16px;
-            font-family: 'Inter', sans-serif;
-            transition: var(--md-transition);
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
             outline: none;
+            border-color: #667eea;
         }
 
-        .md-input:focus {
-            border-color: var(--md-primary);
-            background: var(--md-surface-container-high);
-            box-shadow: 0 0 0 4px rgba(187, 134, 252, 0.15);
-        }
-
-        .md-input::placeholder {
-            color: var(--md-on-surface-variant);
-            opacity: 0.5;
-        }
-
-        .md-input:hover {
-            border-color: var(--md-primary);
-        }
-
-        .md-input:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        /* ===== Select ===== */
-        .md-select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23BB86FC' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 20px;
-            padding-right: 48px;
-            cursor: pointer;
-        }
-
-        .md-select option {
-            background: var(--md-surface);
-            color: var(--md-on-surface);
-        }
-
-        /* ===== Material Buttons ===== */
-        .md-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 14px 32px;
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
             border: none;
-            border-radius: 100px;
-            font-size: 16px;
-            font-weight: 600;
-            font-family: 'Inter', sans-serif;
+            padding: 14px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            transition: var(--md-transition);
-            text-decoration: none;
-            letter-spacing: 0.3px;
             width: 100%;
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.2s;
         }
 
-        .md-btn::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: rgba(255, 255, 255, 0);
-            transition: var(--md-transition);
+        .btn:hover {
+            transform: scale(1.02);
         }
 
-        .md-btn:hover::after {
-            background: rgba(255, 255, 255, 0.08);
-        }
-
-        .md-btn:active::after {
-            background: rgba(255, 255, 255, 0.15);
-        }
-
-        .md-btn-primary {
-            background: var(--md-primary);
-            color: var(--md-on-primary);
-            box-shadow: 0 4px 12px rgba(187, 134, 252, 0.3);
-        }
-
-        .md-btn-primary:hover {
-            box-shadow: 0 6px 20px rgba(187, 134, 252, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .md-btn-secondary {
-            background: var(--md-secondary);
-            color: var(--md-on-secondary);
-            box-shadow: 0 4px 12px rgba(3, 218, 198, 0.3);
-        }
-
-        .md-btn-secondary:hover {
-            box-shadow: 0 6px 20px rgba(3, 218, 198, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .md-btn-error {
-            background: var(--md-error);
-            color: var(--md-on-error);
-            box-shadow: 0 4px 12px rgba(207, 102, 121, 0.3);
-        }
-
-        .md-btn-error:hover {
-            box-shadow: 0 6px 20px rgba(207, 102, 121, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .md-btn-outline {
-            background: transparent;
-            color: var(--md-primary);
-            border: 2px solid var(--md-primary);
-        }
-
-        .md-btn-outline:hover {
-            background: rgba(187, 134, 252, 0.08);
-        }
-
-        .md-btn-icon {
-            width: 40px;
-            height: 40px;
-            padding: 0;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: transparent;
-            border: none;
-            color: var(--md-on-surface-variant);
-            cursor: pointer;
-            transition: var(--md-transition);
-        }
-
-        .md-btn-icon:hover {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--md-primary);
-        }
-
-        /* ===== Grid Layout ===== */
-        .md-grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-        }
-
-        .md-grid-3 {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            gap: 16px;
-        }
-
-        /* ===== Header ===== */
-        .app-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
-        .app-header .md-title-large {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .app-header .md-title-large .material-icons-round {
-            font-size: 32px;
-            color: var(--md-primary);
-        }
-
-        /* ===== User Badge ===== */
-        .user-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--md-primary-container);
-            color: var(--md-primary);
-            padding: 8px 16px 8px 20px;
-            border-radius: 100px;
-            font-size: 14px;
-            font-weight: 500;
-        }
-
-        .user-badge .material-icons-round {
-            font-size: 20px;
-        }
-
-        /* ===== Salary Card ===== */
-        .salary-display {
-            background: linear-gradient(135deg, var(--md-primary-container), var(--md-surface-container-high));
-            border: 1px solid rgba(187, 134, 252, 0.2);
-            border-radius: var(--md-radius-sm);
-            padding: 20px 24px;
-            text-align: center;
-            margin-top: 12px;
-        }
-
-        .salary-display .amount {
-            font-size: 36px;
-            font-weight: 700;
-            color: var(--md-primary);
-            display: block;
-            margin: 8px 0;
-        }
-
-        .salary-display .label {
-            font-size: 14px;
-            color: var(--md-on-surface-variant);
-            font-weight: 400;
-        }
-
-        /* ===== Table ===== */
-        .table-wrapper {
-            overflow-x: auto;
-            margin-top: 16px;
-            border-radius: var(--md-radius-xs);
-            border: 1px solid var(--md-outline);
-        }
-
-        .md-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 14px;
-        }
-
-        .md-table thead {
-            background: var(--md-surface-container);
-        }
-
-        .md-table th {
-            padding: 14px 16px;
-            text-align: center;
-            font-weight: 600;
-            color: var(--md-on-surface-variant);
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            border-bottom: 2px solid var(--md-outline);
-        }
-
-        .md-table td {
-            padding: 14px 16px;
-            text-align: center;
-            border-bottom: 1px solid var(--md-outline);
-            color: var(--md-on-surface);
-        }
-
-        .md-table tbody tr:hover {
-            background: var(--md-surface-container);
-        }
-
-        .md-table tbody tr:last-child td {
-            border-bottom: none;
-        }
-
-        .md-table .total-row {
-            background: var(--md-primary-container);
-            font-weight: 600;
-        }
-
-        .md-table .total-row td {
-            color: var(--md-primary);
-            border-top: 2px solid var(--md-primary);
-        }
-
-        /* ===== Status Chips ===== */
-        .md-chip {
-            display: inline-block;
-            padding: 4px 14px;
-            border-radius: 100px;
-            font-size: 12px;
-            font-weight: 500;
-            letter-spacing: 0.3px;
-        }
-
-        .md-chip-normal {
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--md-on-surface-variant);
-        }
-
-        .md-chip-double {
-            background: rgba(187, 134, 252, 0.2);
-            color: var(--md-primary);
-        }
-
-        /* ===== Total Salary Box ===== */
-        .total-salary-box {
-            background: linear-gradient(135deg, var(--md-primary-container), var(--md-surface-container-high));
-            border-radius: var(--md-radius-sm);
-            padding: 20px;
-            text-align: center;
-            margin-top: 16px;
-            border: 1px solid rgba(187, 134, 252, 0.15);
-        }
-
-        .total-salary-box .amount {
-            font-size: 32px;
-            font-weight: 700;
-            color: var(--md-secondary);
-            display: block;
-        }
-
-        /* ===== Alert ===== */
-        .md-alert {
-            padding: 14px 18px;
-            border-radius: var(--md-radius-xs);
-            margin-bottom: 16px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 500;
-        }
-
-        .md-alert-success {
-            background: rgba(3, 218, 198, 0.12);
-            color: var(--md-secondary);
-            border: 1px solid rgba(3, 218, 198, 0.2);
-        }
-
-        .md-alert-error {
-            background: rgba(207, 102, 121, 0.12);
-            color: var(--md-error);
-            border: 1px solid rgba(207, 102, 121, 0.2);
-        }
-
-        .md-alert-info {
-            background: rgba(187, 134, 252, 0.12);
-            color: var(--md-primary);
-            border: 1px solid rgba(187, 134, 252, 0.2);
-        }
-
-        /* ===== Hidden ===== */
         .hidden {
             display: none !important;
         }
 
-        /* ===== Responsive ===== */
-        @media (max-width: 768px) {
-            body {
-                padding: 16px;
-            }
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
 
-            .md-card {
-                padding: 20px;
-            }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
 
-            .md-grid-2 {
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .salary-info {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            float: left;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .total-row {
+            background: #e7f5ff;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .grid-2 {
                 grid-template-columns: 1fr;
             }
-
-            .md-grid-3 {
-                grid-template-columns: 1fr 1fr;
-            }
-
-            .app-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .app-header .md-title-large {
-                font-size: 22px;
-            }
-
-            .salary-display .amount {
-                font-size: 28px;
-            }
-
-            .md-table th,
-            .md-table td {
-                padding: 10px 12px;
-                font-size: 13px;
-            }
-
-            .md-btn {
-                padding: 12px 24px;
-                font-size: 14px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .md-grid-3 {
-                grid-template-columns: 1fr;
-            }
-
-            .md-card {
-                padding: 16px;
-            }
-
-            .md-table th,
-            .md-table td {
-                padding: 8px 10px;
-                font-size: 12px;
-            }
-        }
-
-        /* ===== Animations ===== */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .md-card {
-            animation: fadeInUp 0.4s ease-out;
-        }
-
-        /* ===== Material Icons Round Fix ===== */
-        .material-icons-round {
-            font-family: 'Material Icons Round';
-            font-weight: normal;
-            font-style: normal;
-            font-size: 24px;
-            line-height: 1;
-            letter-spacing: normal;
-            text-transform: none;
-            display: inline-block;
-            white-space: nowrap;
-            word-wrap: normal;
-            direction: ltr;
-            font-feature-settings: 'liga';
-            -webkit-font-smoothing: antialiased;
         }
     </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- ===== LOGIN SCREEN ===== -->
+    <div class="container" id="app">
+        <!-- شاشة تسجيل الدخول -->
         <div id="loginScreen">
-            <div class="md-card" style="max-width: 440px; margin: 0 auto;">
-                <div style="text-align: center; margin-bottom: 32px;">
-                    <span class="material-icons-round" style="font-size: 56px; color: var(--md-primary);">account_circle</span>
-                    <h1 class="md-title-large" style="margin-top: 12px;">مرحباً بك</h1>
-                    <p class="md-body-large">سجل دخولك للوصول إلى نظام الرواتب</p>
-                </div>
-
-                <div id="loginMessage" class="md-alert hidden"></div>
-
-                <div class="md-input-group">
-                    <label>اسم المستخدم</label>
-                    <input type="text" id="username" class="md-input" placeholder="أدخل اسم المستخدم" />
-                </div>
-
-                <div class="md-input-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" id="password" class="md-input" placeholder="أدخل كلمة المرور" />
-                </div>
-
-                <button class="md-btn md-btn-primary" onclick="login()">
-                    <span class="material-icons-round">login</span>
-                    تسجيل الدخول
-                </button>
-
-                <div style="text-align: center; margin-top: 20px;">
-                    <span class="md-body-large" style="font-size: 13px; color: var(--md-on-surface-variant); opacity: 0.6;">
-                        🔑 تجريبي: ahmed / 123456
-                    </span>
-                </div>
+            <h1>🔐 تسجيل الدخول</h1>
+            <div id="loginMessage" class="alert hidden"></div>
+            <div class="form-group">
+                <label>اسم المستخدم</label>
+                <input type="text" id="username" placeholder="أدخل اسم المستخدم" />
             </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="password" placeholder="أدخل كلمة المرور" />
+            </div>
+            <button class="btn" onclick="login()">تسجيل الدخول</button>
+            <p style="text-align: center; margin-top: 15px; color: #666; font-size: 14px;">
+                🔑 مستخدم تجريبي: ahmed / 123456
+            </p>
         </div>
 
-        <!-- ===== MAIN SCREEN ===== -->
+        <!-- الشاشة الرئيسية -->
         <div id="mainScreen" class="hidden">
-            <!-- Header -->
-            <div class="app-header">
-                <div class="md-title-large">
-                    <span class="material-icons-round">payments</span>
-                    نظام الرواتب
-                </div>
-                <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap;">
-                    <span class="user-badge">
-                        <span class="material-icons-round">person</span>
-                        <span id="currentUser">user</span>
-                    </span>
-                    <button class="md-btn md-btn-error" onclick="logout()" style="width: auto; padding: 8px 20px; font-size: 14px;">
-                        <span class="material-icons-round" style="font-size: 18px;">logout</span>
-                        خروج
-                    </button>
+            <h1>📊 نظام الرواتب</h1>
+            <button class="logout-btn" onclick="logout()">تسجيل خروج</button>
+            <br><br>
+            <div class="card">
+                <p><strong>👤 المستخدم:</strong> <span id="currentUser"></span></p>
+                <div class="salary-info">
+                    الراتب الثابت: <span id="fixedSalary">0</span> ج.م
                 </div>
             </div>
 
-            <!-- Salary Card -->
-            <div class="md-card">
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-                    <span class="md-title-medium">💰 الراتب الثابت</span>
-                    <span id="salaryStatus" style="font-size: 13px; color: var(--md-secondary);"></span>
+            <div id="setSalarySection" class="card">
+                <h3>💵 تحديد الراتب الثابت</h3>
+                <div class="form-group">
+                    <label>الراتب الشهري الثابت (ج.م)</label>
+                    <input type="number" id="fixedSalaryInput" placeholder="مثال: 5000" />
                 </div>
-                <div class="salary-display">
-                    <span class="label">الراتب الشهري</span>
-                    <span class="amount" id="fixedSalary">0</span>
-                    <span class="label">ج.م</span>
-                </div>
+                <button class="btn" onclick="setFixedSalary()">حفظ الراتب</button>
             </div>
 
-            <!-- Set Salary Section -->
-            <div id="setSalarySection" class="md-card hidden">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
-                    <span class="material-icons-round" style="color: var(--md-secondary);">edit</span>
-                    <span class="md-title-medium">تحديد الراتب الثابت</span>
-                </div>
-                <p class="md-body-large" style="margin-bottom: 16px; font-size: 14px;">
-                    ⚠️ هذا الإجراء يظهر مرة واحدة فقط لكل مستخدم
-                </p>
-                <div class="md-input-group">
-                    <label>الراتب الشهري (ج.م)</label>
-                    <input type="number" id="fixedSalaryInput" class="md-input" placeholder="مثال: 6000" />
-                </div>
-                <button class="md-btn md-btn-secondary" onclick="setFixedSalary()">
-                    <span class="material-icons-round">save</span>
-                    حفظ الراتب
-                </button>
-            </div>
-
-            <!-- Add Attendance -->
-            <div class="md-card">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                    <span class="material-icons-round" style="color: var(--md-primary);">add_circle</span>
-                    <span class="md-title-medium">إضافة يوم حضور</span>
-                </div>
-
-                <div class="md-grid-2">
-                    <div class="md-input-group">
-                        <label>📅 التاريخ</label>
-                        <input type="date" id="attendanceDate" class="md-input" />
+            <div class="card">
+                <h3>📝 إدخال الحضور اليومي</h3>
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>📅 اليوم</label>
+                        <input type="date" id="attendanceDate" />
                     </div>
-                    <div class="md-input-group">
+                    <div class="form-group">
                         <label>⏰ عدد الساعات</label>
-                        <input type="number" id="workHours" class="md-input" placeholder="مثال: 8" step="0.5" />
+                        <input type="number" id="workHours" placeholder="مثال: 8" step="0.5" />
                     </div>
                 </div>
-
-                <div class="md-input-group">
+                <div class="form-group">
                     <label>📌 نوع اليوم</label>
-                    <select id="dayType" class="md-input md-select">
-                        <option value="normal">📅 يوم عادي (×1)</option>
-                        <option value="double">🌟 يوم مزدوج (×2)</option>
+                    <select id="dayType">
+                        <option value="normal">يوم عادي (×1)</option>
+                        <option value="double">يوم مزدوج الأجر (×2)</option>
                     </select>
                 </div>
-
-                <button class="md-btn md-btn-primary" onclick="addAttendance()">
-                    <span class="material-icons-round">add</span>
-                    إضافة اليوم
-                </button>
+                <button class="btn" onclick="addAttendance()">➕ إضافة اليوم</button>
             </div>
 
-            <!-- Report -->
-            <div class="md-card">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
-                    <span class="material-icons-round" style="color: var(--md-secondary);">assessment</span>
-                    <span class="md-title-medium">تقرير الشهر</span>
-                    <span style="margin-right: auto; font-size: 13px; color: var(--md-on-surface-variant);" id="daysCount">0 يوم</span>
-                </div>
-
-                <div class="table-wrapper">
-                    <table class="md-table">
+            <div class="card">
+                <h3>📊 تقرير الشهر</h3>
+                <div id="reportContainer">
+                    <table id="attendanceTable">
                         <thead>
                             <tr>
                                 <th>اليوم</th>
                                 <th>الساعات</th>
                                 <th>نوع اليوم</th>
-                                <th>الأجر</th>
+                                <th>الأجر اليومي</th>
                                 <th>الإجراء</th>
                             </tr>
                         </thead>
                         <tbody id="attendanceBody">
-                            <tr>
-                                <td colspan="5" style="text-align: center; color: var(--md-on-surface-variant); padding: 32px;">
-                                    <span class="material-icons-round" style="font-size: 40px; display: block; margin-bottom: 8px; opacity: 0.3;">inbox</span>
-                                    لا توجد أيام مسجلة
-                                </td>
-                            </tr>
                         </tbody>
-                        <tfoot id="attendanceFooter"></tfoot>
+                        <tfoot id="attendanceFooter">
+                        </tfoot>
                     </table>
-                </div>
-
-                <div class="total-salary-box">
-                    <span style="font-size: 14px; color: var(--md-on-surface-variant);">💰 إجمالي الراتب الشهري</span>
-                    <span class="amount" id="totalSalaryAmount">0</span>
-                    <span style="font-size: 14px; color: var(--md-on-surface-variant);">ج.م</span>
+                    <div id="totalSalary" style="margin-top: 15px; font-size: 18px; text-align: center; background: #e7f5ff; padding: 10px; border-radius: 10px;">
+                        <strong>💰 إجمالي الراتب الشهري: <span id="totalSalaryAmount">0</span> ج.م</strong>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // ============================================================
-        // ===== DATA MANAGEMENT =====
-        // ============================================================
+        // ========== إدارة المستخدمين والبيانات ==========
         const STORAGE_KEY = 'salaryAppData';
 
         function loadData() {
-            const data = localStorage.getItem(STORAGE_KEY);
-            return data ? JSON.parse(data) : { users: {} };
+            try {
+                const data = localStorage.getItem(STORAGE_KEY);
+                return data ? JSON.parse(data) : { users: {} };
+            } catch (e) {
+                console.log('خطأ في تحميل البيانات:', e);
+                return { users: {} };
+            }
         }
 
         function saveData(data) {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+            } catch (e) {
+                console.log('خطأ في حفظ البيانات:', e);
+            }
         }
 
-        // ============================================================
-        // ===== LOGIN / LOGOUT =====
-        // ============================================================
+        // ========== وظائف تسجيل الدخول ==========
         let currentUser = null;
 
         function login() {
+            console.log('دالة login تم استدعاؤها');
+            
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
             const messageDiv = document.getElementById('loginMessage');
 
+            console.log('Username:', username);
+            console.log('Password:', password);
+
             if (!username || !password) {
-                showMessage(messageDiv, '❌ يرجى إدخال اسم المستخدم وكلمة المرور', 'error');
+                showMessage(messageDiv, '❌ يرجى إدخال اسم المستخدم وكلمة المرور', 'danger');
                 return;
             }
 
             const data = loadData();
-
+            console.log('البيانات المحملة:', data);
+            
+            // إذا كان المستخدم جديداً، نقوم بتسجيله
             if (!data.users[username]) {
                 data.users[username] = {
                     password: password,
@@ -785,16 +305,20 @@
                     attendance: []
                 };
                 saveData(data);
+                console.log('تم إنشاء مستخدم جديد:', username);
                 currentUser = username;
                 showMainScreen();
                 return;
             }
 
+            // التحقق من كلمة المرور للمستخدم الموجود
             if (data.users[username].password === password) {
+                console.log('تسجيل دخول ناجح');
                 currentUser = username;
                 showMainScreen();
             } else {
-                showMessage(messageDiv, '❌ كلمة المرور غير صحيحة', 'error');
+                console.log('كلمة مرور خاطئة');
+                showMessage(messageDiv, '❌ كلمة المرور غير صحيحة', 'danger');
             }
         }
 
@@ -809,55 +333,43 @@
 
         function showMessage(element, text, type) {
             element.textContent = text;
-            element.className = `md-alert md-alert-${type}`;
+            element.className = `alert alert-${type}`;
             element.classList.remove('hidden');
         }
 
-        // ============================================================
-        // ===== SHOW MAIN SCREEN =====
-        // ============================================================
+        // ========== عرض الشاشة الرئيسية ==========
         function showMainScreen() {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('mainScreen').classList.remove('hidden');
             document.getElementById('currentUser').textContent = currentUser;
-
+            
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('attendanceDate').value = today;
 
             loadUserData();
         }
 
-        // ============================================================
-        // ===== LOAD USER DATA =====
-        // ============================================================
+        // ========== تحميل بيانات المستخدم ==========
         function loadUserData() {
             const data = loadData();
             const userData = data.users[currentUser];
 
             if (userData.fixedSalary) {
                 document.getElementById('fixedSalary').textContent = userData.fixedSalary;
-                document.getElementById('setSalarySection').classList.add('hidden');
-                document.getElementById('salaryStatus').textContent = '✅ تم التحديد';
-                document.getElementById('salaryStatus').style.color = 'var(--md-secondary)';
             } else {
-                document.getElementById('setSalarySection').classList.remove('hidden');
                 document.getElementById('fixedSalary').textContent = 'غير محدد';
-                document.getElementById('salaryStatus').textContent = '⚠️ يرجى التحديد';
-                document.getElementById('salaryStatus').style.color = 'var(--md-error)';
             }
 
             renderAttendance(userData.attendance || [], userData.fixedSalary || 0);
         }
 
-        // ============================================================
-        // ===== SET FIXED SALARY =====
-        // ============================================================
+        // ========== تعيين الراتب الثابت ==========
         function setFixedSalary() {
             const salaryInput = document.getElementById('fixedSalaryInput');
             const salary = parseFloat(salaryInput.value);
 
             if (!salary || salary <= 0) {
-                showAlert('⚠️ يرجى إدخال راتب صحيح أكبر من 0', 'error');
+                alert('⚠️ يرجى إدخال راتب صحيح أكبر من 0');
                 return;
             }
 
@@ -866,23 +378,19 @@
             saveData(data);
 
             document.getElementById('fixedSalary').textContent = salary;
-            document.getElementById('setSalarySection').classList.add('hidden');
-            document.getElementById('salaryStatus').textContent = '✅ تم التحديد';
-            document.getElementById('salaryStatus').style.color = 'var(--md-secondary)';
-
+            
             renderAttendance(data.users[currentUser].attendance || [], salary);
-            showAlert('✅ تم حفظ الراتب الثابت بنجاح!', 'success');
+            
+            alert('✅ تم حفظ الراتب الثابت بنجاح!');
         }
 
-        // ============================================================
-        // ===== CALCULATE DAILY WAGE =====
-        // ============================================================
+        // ========== حساب أجر اليوم ==========
         function calculateDailyWage(hours, dayType, fixedSalary) {
             const dailyRate = fixedSalary / 30;
             const hourlyRate = dailyRate / 8;
 
             let totalWage = 0;
-
+            
             if (dayType === 'double') {
                 totalWage = hours * hourlyRate * 2;
             } else {
@@ -898,26 +406,24 @@
             return Math.round(totalWage * 100) / 100;
         }
 
-        // ============================================================
-        // ===== ADD ATTENDANCE =====
-        // ============================================================
+        // ========== إضافة يوم حضور ==========
         function addAttendance() {
             const date = document.getElementById('attendanceDate').value;
             const hours = parseFloat(document.getElementById('workHours').value);
             const dayType = document.getElementById('dayType').value;
 
             if (!date) {
-                showAlert('⚠️ يرجى اختيار التاريخ', 'error');
+                alert('⚠️ يرجى اختيار التاريخ');
                 return;
             }
 
             if (!hours || hours <= 0) {
-                showAlert('⚠️ يرجى إدخال عدد ساعات صحيح', 'error');
+                alert('⚠️ يرجى إدخال عدد ساعات صحيح');
                 return;
             }
 
             if (hours > 24) {
-                showAlert('⚠️ عدد الساعات لا يمكن أن يتجاوز 24 ساعة', 'error');
+                alert('⚠️ عدد الساعات لا يمكن أن يتجاوز 24 ساعة');
                 return;
             }
 
@@ -925,13 +431,13 @@
             const userData = data.users[currentUser];
 
             if (!userData.fixedSalary) {
-                showAlert('⚠️ يرجى تحديد الراتب الثابت أولاً', 'error');
+                alert('⚠️ يرجى تحديد الراتب الثابت أولاً');
                 return;
             }
 
             const existing = userData.attendance.find(a => a.date === date);
             if (existing) {
-                showAlert('⚠️ هذا اليوم مسجل بالفعل!', 'error');
+                alert('⚠️ هذا اليوم مسجل بالفعل! يمكنك حذفه وإعادة إضافته.');
                 return;
             }
 
@@ -950,17 +456,15 @@
             renderAttendance(userData.attendance, userData.fixedSalary);
 
             document.getElementById('workHours').value = '';
-
+            
             const nextDate = new Date(date);
             nextDate.setDate(nextDate.getDate() + 1);
             document.getElementById('attendanceDate').value = nextDate.toISOString().split('T')[0];
 
-            showAlert('✅ تم إضافة اليوم بنجاح!', 'success');
+            alert('✅ تم إضافة اليوم بنجاح!');
         }
 
-        // ============================================================
-        // ===== DELETE DAY =====
-        // ============================================================
+        // ========== حذف يوم ==========
         function deleteDay(date) {
             if (!confirm(`هل أنت متأكد من حذف يوم ${date}؟`)) return;
 
@@ -969,29 +473,17 @@
             userData.attendance = userData.attendance.filter(a => a.date !== date);
             saveData(data);
             renderAttendance(userData.attendance, userData.fixedSalary || 0);
-            showAlert('🗑️ تم حذف اليوم بنجاح', 'info');
         }
 
-        // ============================================================
-        // ===== RENDER ATTENDANCE =====
-        // ============================================================
+        // ========== عرض التقرير ==========
         function renderAttendance(attendance, fixedSalary) {
             const tbody = document.getElementById('attendanceBody');
             const tfoot = document.getElementById('attendanceFooter');
-            const daysCount = document.getElementById('daysCount');
-
+            
             if (!attendance || attendance.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="5" style="text-align: center; color: var(--md-on-surface-variant); padding: 32px;">
-                            <span class="material-icons-round" style="font-size: 40px; display: block; margin-bottom: 8px; opacity: 0.3;">inbox</span>
-                            لا توجد أيام مسجلة
-                        </td>
-                    </tr>
-                `;
+                tbody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: #666;">لا توجد أيام مسجلة حتى الآن</td></tr>`;
                 tfoot.innerHTML = '';
                 document.getElementById('totalSalaryAmount').textContent = '0';
-                daysCount.textContent = '0 يوم';
                 return;
             }
 
@@ -999,23 +491,67 @@
 
             tbody.innerHTML = attendance.map(day => {
                 totalSalary += day.wage;
-                const dayTypeText = day.dayType === 'double' 
-                    ? '<span class="md-chip md-chip-double">🌟 مزدوج</span>' 
-                    : '<span class="md-chip md-chip-normal">📅 عادي</span>';
+                const dayTypeText = day.dayType === 'double' ? '🌟 مزدوج' : 'عادي';
                 return `
                     <tr>
                         <td>${day.date}</td>
                         <td>${day.hours} س</td>
                         <td>${dayTypeText}</td>
                         <td>${day.wage} ج.م</td>
-                        <td>
-                            <button class="md-btn-icon" onclick="deleteDay('${day.date}')" title="حذف">
-                                <span class="material-icons-round" style="font-size: 20px;">delete</span>
-                            </button>
-                        </td>
+                        <td><button onclick="deleteDay('${day.date}')" style="background: #dc3545; color: white; border: none; padding: 5px 15px; border-radius: 5px; cursor: pointer;">🗑️</button></td>
                     </tr>
                 `;
             }).join('');
 
             tfoot.innerHTML = `
-                <
+                <tr class="total-row">
+                    <td colspan="3"><strong>الإجمالي</strong></td>
+                    <td><strong>${Math.round(totalSalary * 100) / 100} ج.م</strong></td>
+                    <td></td>
+                </tr>
+            `;
+
+            document.getElementById('totalSalaryAmount').textContent = Math.round(totalSalary * 100) / 100;
+        }
+
+        // ========== إضافة مستخدم تجريبي ==========
+        function initDemoUser() {
+            const data = loadData();
+            if (!data.users['ahmed']) {
+                data.users['ahmed'] = {
+                    password: '123456',
+                    fixedSalary: null,
+                    attendance: []
+                };
+                saveData(data);
+                console.log('تم إضافة المستخدم التجريبي');
+            }
+        }
+
+        // ========== تشغيل التطبيق ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('✅ التطبيق بدأ تشغيله');
+            initDemoUser();
+            
+            // اختبار localStorage
+            try {
+                localStorage.setItem('test', 'test');
+                localStorage.removeItem('test');
+                console.log('✅ localStorage يعمل بشكل صحيح');
+            } catch (e) {
+                console.log('❌ localStorage لا يعمل:', e);
+                alert('⚠️ المتصفح لا يدعم LocalStorage. يرجى استخدام متصفح حديث.');
+            }
+        });
+
+        // جعل الدوال عالمية للوصول من HTML
+        window.login = login;
+        window.logout = logout;
+        window.setFixedSalary = setFixedSalary;
+        window.addAttendance = addAttendance;
+        window.deleteDay = deleteDay;
+
+        console.log('✅ جميع الدوال جاهزة');
+    </script>
+</body>
+</html>
