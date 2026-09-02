@@ -6,22 +6,10 @@
 <title>HR System</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
 <style>
-:root{
-  --navy:#0d1b4b;--navy2:#122258;--navy3:#1a2f6e;
-  --bg:#eef2fa;--bg2:#ffffff;--bg3:#e8effe;--bg4:#c8d8f5;
-  --border:rgba(13,27,75,0.1);--border2:rgba(42,77,184,0.35);
-  --accent:#0d1b4b;--accent-lt:#2a4db8;--green:#1a8a55;
-  --red:#e03448;--yellow:#e09020;--orange:#e06820;--purple:#7b5cf6;
-  --text:#0d1b4b;--text2:#5a6a84;--text3:#9aaac0;
-  --radius:12px;--radius-sm:7px;
-  --login-bg1:#0d1b4b;--login-bg2:#2a4db8;
-  --bottom-nav-h:60px;
-}
+:root{--navy:#0d1b4b;--navy2:#122258;--navy3:#1a2f6e;--bg:#eef2fa;--bg2:#fff;--bg3:#e8effe;--bg4:#c8d8f5;--border:rgba(13,27,75,0.1);--border2:rgba(42,77,184,0.35);--accent:#0d1b4b;--accent-lt:#2a4db8;--green:#1a8a55;--red:#e03448;--yellow:#e09020;--orange:#e06820;--purple:#7b5cf6;--text:#0d1b4b;--text2:#5a6a84;--text3:#9aaac0;--radius:12px;--radius-sm:7px;--bottom-nav-h:60px}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;font-size:14px;overscroll-behavior:none}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg3)}::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:3px}
-
-/* ===== LOGIN ===== */
 #login-screen{min-height:100vh;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 35%,#0f2050 0%,#0a1638 38%,#050a1a 75%,#03060f 100%);position:relative;overflow:hidden;padding:16px}
 #login-screen::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(42,77,184,0.10) 1px,transparent 1px);background-size:32px 32px}
 #login-screen::after{content:'';position:absolute;top:50%;left:50%;width:640px;height:640px;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(42,77,184,0.16) 0%,rgba(42,77,184,0) 65%);pointer-events:none}
@@ -41,17 +29,12 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .login-btn{width:100%;background:linear-gradient(90deg,#2a4db8 0%,#0d1b4b 100%);border:1px solid rgba(42,77,184,0.5);border-radius:var(--radius-sm);padding:14px;font-size:15px;font-weight:800;color:#fff;cursor:pointer;font-family:'Cairo',sans-serif;margin-top:6px;transition:all 0.2s;-webkit-appearance:none;box-shadow:0 4px 20px rgba(42,77,184,0.35)}
 .login-btn:hover{box-shadow:0 6px 28px rgba(42,77,184,0.5);transform:translateY(-1px)}
 .login-btn:active{transform:scale(0.98)}
+.login-btn:disabled{opacity:0.6;cursor:not-allowed}
 .login-err{background:rgba(224,52,72,0.12);border:1px solid rgba(224,52,72,0.35);border-radius:var(--radius-sm);padding:9px 13px;font-size:12px;color:#ff8a95;margin-top:10px;display:none;text-align:center}
-
-/* ===== APP SHELL ===== */
 #app{display:none;min-height:100vh;min-height:-webkit-fill-available}
-
-/* ===== LIVE INDICATOR ===== */
 .live-dot{display:inline-flex;align-items:center;gap:4px;font-size:10px;color:#2cb87a;font-weight:700;margin-right:8px}
 .live-dot::before{content:'';width:6px;height:6px;border-radius:50%;background:#2cb87a;display:inline-block;animation:livePulse 2s infinite}
 @keyframes livePulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
-
-/* ===== DESKTOP SIDEBAR ===== */
 .sidebar{position:fixed;top:0;right:0;width:215px;height:100vh;background:var(--navy);display:flex;flex-direction:column;z-index:100}
 .sb-header{padding:18px 14px 14px;border-bottom:1px solid rgba(255,255,255,0.08)}
 .sb-logo{display:flex;align-items:center;gap:10px;margin-bottom:13px}
@@ -68,14 +51,10 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .sb-footer{padding:12px 8px;border-top:1px solid rgba(255,255,255,0.08)}
 .logout-btn{display:flex;align-items:center;gap:8px;width:100%;padding:9px 10px;border-radius:var(--radius-sm);background:none;border:none;cursor:pointer;font-size:12px;color:rgba(255,255,255,0.45);font-family:'Cairo',sans-serif;transition:all 0.15s}
 .logout-btn:hover,.logout-btn:active{background:rgba(224,52,72,0.15);color:#f87080}
-
-/* ===== MOBILE BOTTOM NAV ===== */
 .bottom-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:var(--bottom-nav-h);background:var(--navy);z-index:200;flex-direction:row;align-items:stretch;border-top:1px solid rgba(255,255,255,0.1);padding-bottom:env(safe-area-inset-bottom)}
 .bn-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;border:none;background:none;color:rgba(255,255,255,0.5);font-family:'Cairo',sans-serif;font-size:10px;font-weight:600;cursor:pointer;padding:6px 0;transition:color 0.2s}
 .bn-item.active{color:#fff}.bn-item.active .bn-icon{background:rgba(255,255,255,0.15);border-radius:10px}
 .bn-icon{font-size:20px;padding:4px 14px;transition:background 0.2s}
-
-/* ===== MOBILE TOP BAR ===== */
 .mobile-topbar{display:none;position:fixed;top:0;left:0;right:0;height:56px;background:var(--navy);z-index:150;align-items:center;justify-content:space-between;padding:0 16px}
 .mt-logo{display:flex;align-items:center;gap:8px}
 .mt-logo-av{width:30px;height:30px;border-radius:50%;overflow:hidden;border:1px solid rgba(255,255,255,0.2)}
@@ -84,8 +63,6 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .mt-user{display:flex;flex-direction:column;align-items:flex-end}
 .mt-name{font-size:13px;font-weight:700;color:#fff}
 .mt-sal{font-size:11px;color:#5de8b0;font-weight:600}
-
-/* ===== MAIN CONTENT ===== */
 .main{margin-right:215px;padding:22px;min-height:100vh}
 .page{display:none}.page.active{display:block;animation:fadeIn 0.2s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
@@ -104,83 +81,26 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .emp-btn:hover{background:#fff;border-color:var(--accent-lt);color:var(--accent-lt);box-shadow:0 4px 12px rgba(42,77,184,0.18);transform:translateY(-1px)}
 .emp-btn:active{border-color:var(--accent-lt);color:var(--accent-lt);transform:scale(0.97)}
 .emp-btn.active{background:var(--navy);border-color:var(--navy);color:#fff}
-
-/* ===== ATTENDANCE TABLE ===== */
 .att-layout{display:grid;grid-template-columns:1fr 305px;gap:14px;align-items:start}
 .att-table-wrap{overflow-y:auto;max-height:72vh}
 .att-table{width:100%;border-collapse:collapse;font-size:12px}
 .att-table th{font-size:10px;font-weight:700;color:var(--text3);padding:7px 11px;text-align:right;border-bottom:1.5px solid var(--border);position:sticky;top:0;background:#fff;z-index:2;letter-spacing:0.04em;text-transform:uppercase}
 .att-table td{padding:0}
 .day-row{display:flex;align-items:center;padding:11px 13px;gap:9px;cursor:pointer;transition:all 0.2s ease;border:1.5px solid var(--border2);border-radius:10px;background:#fff;margin:6px 2px;box-shadow:0 1px 4px rgba(13,27,75,0.05)}
-.day-row:hover{
-  background:#fff;
-  border-color:var(--accent-lt);
-  box-shadow:0 6px 18px rgba(42,77,184,0.2);
-  transform:translateY(-2px);
-}
+.day-row:hover{background:#fff;border-color:var(--accent-lt);box-shadow:0 6px 18px rgba(42,77,184,0.2);transform:translateY(-2px)}
 .day-row:hover .day-name-txt{color:var(--accent-lt);font-weight:700}
 .day-row:active{transform:translateY(0);box-shadow:0 2px 8px rgba(42,77,184,0.15)}
-.day-row.active-row{
-  background:#fff;
-  border:2px solid var(--accent-lt);
-  box-shadow:0 0 0 3px rgba(42,77,184,0.12), 0 6px 18px rgba(42,77,184,0.2);
-  transform:translateY(-2px);
-  font-weight:700;
-}
+.day-row.active-row{background:#fff;border:2px solid var(--accent-lt);box-shadow:0 0 0 3px rgba(42,77,184,0.12), 0 6px 18px rgba(42,77,184,0.2);transform:translateY(-2px);font-weight:700}
 .day-row.active-row .day-name-txt{color:var(--accent-lt);font-weight:800}
-/* ===== TODAY ROW — single rounded card via colspan ===== */
-tr.today-row td{
-  padding:0 !important;
-  border:none !important;
-  background:transparent !important;
-}
-.today-row-card{
-  display:table;
-  width:100%;
-  border-collapse:separate;
-  border-spacing:0;
-  background:linear-gradient(90deg,#a8c0f0 0%,#d4e4fc 20%,#e8effe 50%,#d4e4fc 80%,#a8c0f0 100%);
-  border:2px solid #2a4db8;
-  border-radius:14px;
-  box-shadow:0 2px 12px rgba(42,77,184,0.15);
-  overflow:hidden;
-  cursor:pointer;
-  transition:all 0.2s ease;
-  margin:6px 2px;
-}
-.today-row-card:active{
-  transform:scale(0.98);
-}
-.today-row-card .tcol-day,
-.today-row-card .tcol-status,
-.today-row-card .tcol-hours{
-  display:table-cell;
-  vertical-align:middle;
-  padding:8px 10px;
-}
-.today-row-card .tcol-day{
-  /* day column — content determines width like normal table */
-}
-.today-row-card .tcol-status{
-  text-align:center;
-  white-space:nowrap;
-}
-.today-row-card .tcol-hours{
-  text-align:right;
-  white-space:nowrap;
-}
-.today-row-card .day-num-box{
-  background:linear-gradient(135deg,#2a4db8 0%,#0d1b4b 100%) !important;
-  box-shadow:0 3px 12px rgba(42,77,184,0.45) !important;
-}
-.today-row-card .day-name-txt{
-  color:#2a4db8 !important;
-  font-weight:800 !important;
-}
-.today-row-card .friday-badge{
-  background:rgba(224,104,32,0.15) !important;
-  color:var(--orange) !important;
-}
+tr.today-row td{padding:0 !important;border:none !important;background:transparent !important}
+.today-row-card{display:table;width:100%;border-collapse:separate;border-spacing:0;background:linear-gradient(90deg,#a8c0f0 0%,#d4e4fc 20%,#e8effe 50%,#d4e4fc 80%,#a8c0f0 100%);border:2px solid #2a4db8;border-radius:14px;box-shadow:0 2px 12px rgba(42,77,184,0.15);overflow:hidden;cursor:pointer;transition:all 0.2s ease;margin:6px 2px}
+.today-row-card:active{transform:scale(0.98)}
+.today-row-card .tcol-day,.today-row-card .tcol-status,.today-row-card .tcol-hours{display:table-cell;vertical-align:middle;padding:8px 10px}
+.today-row-card .tcol-status{text-align:center;white-space:nowrap}
+.today-row-card .tcol-hours{text-align:right;white-space:nowrap}
+.today-row-card .day-num-box{background:linear-gradient(135deg,#2a4db8 0%,#0d1b4b 100%) !important;box-shadow:0 3px 12px rgba(42,77,184,0.45) !important}
+.today-row-card .day-name-txt{color:#2a4db8 !important;font-weight:800 !important}
+.today-row-card .friday-badge{background:rgba(224,104,32,0.15) !important;color:var(--orange) !important}
 .friday-row{background:#fff8f0 !important;border-color:rgba(224,104,32,0.4) !important}
 .friday-row:hover{border-color:var(--orange) !important;box-shadow:0 6px 18px rgba(224,104,32,0.2) !important}
 .friday-row .day-num-box{background:linear-gradient(135deg,var(--orange) 0%,#f5a35a 100%) !important;color:#fff !important;box-shadow:0 3px 10px rgba(224,104,32,0.35) !important}
@@ -196,7 +116,6 @@ tr.today-row td{
 .day-comp-badge:hover{border-color:var(--purple);box-shadow:0 5px 14px rgba(123,92,246,0.25);transform:translateY(-1px)}
 .day-ded-badge{font-size:10px;font-weight:700;color:var(--red);background:#fff;border:1.5px solid rgba(224,52,72,0.3);padding:3px 8px;border-radius:8px;white-space:nowrap;margin-top:2px;box-shadow:0 1px 4px rgba(13,27,75,0.05);transition:all 0.2s ease}
 .day-ded-badge:hover{border-color:var(--red);box-shadow:0 5px 14px rgba(224,52,72,0.22);transform:translateY(-1px)}
-
 .pill{display:inline-flex;align-items:center;gap:3px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;white-space:nowrap;background:#fff;box-shadow:0 1px 4px rgba(13,27,75,0.05);transition:all 0.2s ease}
 .pill:hover{transform:translateY(-1px)}
 .p-present{background:#fff;color:#1a8a55;border:1.5px solid #b6e8ce}
@@ -216,11 +135,7 @@ tr.today-row td{
 .p-ded{background:#fff;color:#c01c2e;border:1.5px solid #f5b8bf}
 .p-ded:hover{border-color:#c01c2e;box-shadow:0 5px 14px rgba(192,28,46,0.2)}
 .p-empty{background:transparent;color:var(--text3);border:1px dashed var(--text3);font-weight:500;box-shadow:none}
-
-/* ===== DESKTOP SIDE PANEL ===== */
 .side-panel{background:var(--bg3);border:1.5px solid var(--border2);border-radius:var(--radius);padding:14px;position:sticky;top:22px;max-height:80vh;overflow-y:auto}
-
-/* ===== TODAY CARD ===== */
 .today-card{background:linear-gradient(135deg,var(--navy) 0%,var(--accent-lt) 100%);border-radius:var(--radius);padding:20px 14px 16px;color:#fff;text-align:center;position:relative;overflow:hidden}
 .today-card::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.08) 1px,transparent 1px);background-size:20px 20px}
 .today-card-inner{position:relative;z-index:1}
@@ -229,8 +144,6 @@ tr.today-row td{
 .today-date{font-size:13px;font-weight:600;opacity:0.8;margin-bottom:16px}
 .today-divider{border:none;border-top:1px solid rgba(255,255,255,0.2);margin:0 0 12px}
 .today-hint{font-size:11px;opacity:0.5;display:flex;align-items:center;justify-content:center;gap:5px}
-
-/* ===== ANNUAL LEAVE CARD ===== */
 .annual-leave-card{background:linear-gradient(135deg,var(--navy) 0%,var(--accent-lt) 100%);border-radius:var(--radius);padding:18px 18px 16px;color:#fff;position:relative;overflow:hidden}
 .annual-leave-card::before{content:'';position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,0.07) 1px,transparent 1px);background-size:20px 20px}
 .annual-leave-card.al-danger{background:linear-gradient(135deg,#7b1a2a 0%,#c01c2e 100%)}
@@ -248,8 +161,6 @@ tr.today-row td{
 .al-bar.al-bar-warn{background:#fbbf24}
 .al-bar.al-bar-danger{background:#f87080}
 .al-footer{font-size:11px;opacity:0.65;display:flex;align-items:center;justify-content:center;gap:4px;border-top:1px solid rgba(255,255,255,0.15);padding-top:10px}
-
-/* ===== MOBILE DAY DRAWER ===== */
 .drawer-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);backdrop-filter:blur(2px);z-index:300;opacity:0;transition:opacity 0.25s}
 .drawer-overlay.show{opacity:1}
 .drawer{position:fixed;bottom:0;left:0;right:0;background:#fff;z-index:301;border-radius:24px 24px 0 0;padding:0 16px 24px;max-height:90vh;overflow-y:auto;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 -8px 40px rgba(0,0,0,0.15)}
@@ -257,7 +168,6 @@ tr.today-row td{
 .drawer-handle{width:40px;height:4px;background:var(--bg4);border-radius:4px;margin:12px auto 16px}
 .drawer-title{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:4px}
 .drawer-info{font-size:11px;color:var(--accent-lt);margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
-
 .sp-placeholder{text-align:center;padding:0}
 .sp-title{font-size:11px;color:var(--accent-lt);margin-bottom:12px;padding-bottom:11px;border-bottom:1px solid var(--border)}
 .sp-day-info{font-size:11px;color:var(--accent-lt);margin-bottom:12px;padding-bottom:11px;border-bottom:1px solid var(--border)}
@@ -271,8 +181,6 @@ tr.today-row td{
 .d-green{background:var(--green)}.d-red{background:var(--red)}.d-blue{background:var(--accent-lt)}
 .d-gray{background:var(--text3)}.d-yellow{background:var(--yellow)}.d-orange{background:var(--orange)}
 .d-purple{background:var(--purple)}
-
-/* ===== OT BOX ===== */
 .ot-box{background:var(--bg3);border:1.5px solid var(--border2);border-radius:var(--radius-sm);padding:12px;margin-bottom:10px;transition:all 0.2s}
 .ot-box:hover{border-color:var(--accent-lt);box-shadow:0 4px 14px rgba(42,77,184,0.15)}
 .ot-row{display:flex;align-items:center;gap:8px;margin-bottom:8px}.ot-row:last-child{margin-bottom:0}
@@ -281,8 +189,6 @@ tr.today-row td{
 .ot-input:focus{outline:none;border-color:var(--accent-lt)}
 .ot-select{background:#fff;border:1.5px solid var(--border2);border-radius:6px;padding:9px 10px;font-size:12px;color:var(--text);font-family:'Cairo',sans-serif;flex:1;cursor:pointer;-webkit-appearance:none;transition:all 0.2s}
 .ot-result{font-size:11px;color:var(--orange);font-weight:700;margin-top:8px;padding-top:8px;border-top:1px solid var(--border);direction:rtl;text-align:right}
-
-/* ===== OT TYPE TOGGLE ===== */
 .ot-type-toggle{display:flex;gap:0;margin-bottom:10px;border-radius:var(--radius-sm);overflow:hidden;border:1.5px solid var(--border2)}
 .ot-type-btn{flex:1;padding:9px 6px;font-size:12px;font-weight:700;font-family:'Cairo',sans-serif;border:none;cursor:pointer;transition:all 0.18s;background:var(--bg3);color:var(--text2)}
 .ot-type-btn:hover{background:#e2e8f0}
@@ -295,8 +201,6 @@ tr.today-row td{
 .ot-box.is-comp .ot-comp-note{display:flex}
 .ot-box.is-comp .ot-result{display:none !important}
 .ot-box.is-comp .ot-rate-row{display:none}
-
-/* ===== INDEPENDENT DEDUCTIONS BOX ===== */
 .ind-ded-box{background:#fff5f6;border:1.5px solid rgba(224,52,72,0.2);border-radius:var(--radius-sm);padding:12px;margin-bottom:10px;transition:all 0.2s}
 .ind-ded-box:hover{border-color:var(--red);box-shadow:0 4px 14px rgba(224,52,72,0.15)}
 .ind-ded-title{font-size:10px;font-weight:700;color:var(--red);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:5px}
@@ -307,7 +211,6 @@ tr.today-row td{
 .ind-ded-input:focus{outline:none;border-color:var(--red)}
 .ind-ded-hint{font-size:10px;color:var(--text3);margin-top:6px;padding-top:6px;border-top:1px solid rgba(224,52,72,0.1);text-align:right}
 .ind-ded-result{font-size:11px;color:var(--red);font-weight:700;margin-top:8px;padding-top:8px;border-top:1px solid rgba(224,52,72,0.15);direction:rtl;text-align:right}
-
 .sp-save-btn{width:100%;background:linear-gradient(90deg,var(--navy) 0%,var(--accent-lt) 100%);border:none;border-radius:var(--radius-sm);padding:13px;font-size:14px;font-weight:800;color:#fff;cursor:pointer;font-family:'Cairo',sans-serif;margin-bottom:8px;-webkit-appearance:none;transition:all 0.15s;box-shadow:0 4px 14px rgba(42,77,184,0.25)}
 .sp-save-btn:hover{box-shadow:0 6px 18px rgba(42,77,184,0.35);transform:translateY(-1px)}
 .sp-save-btn:active{transform:scale(0.98)}
@@ -318,8 +221,6 @@ tr.today-row td{
 .sp-clear-btn{width:100%;background:none;border:1.5px solid var(--red);border-radius:var(--radius-sm);padding:10px;font-size:12px;color:var(--red);cursor:pointer;font-family:'Cairo',sans-serif;-webkit-appearance:none;font-weight:700;transition:all 0.15s}
 .sp-clear-btn:hover{background:rgba(224,52,72,0.05)}
 .sp-clear-btn:active{background:rgba(224,52,72,0.08)}
-
-/* ===== SALARY & STATS ===== */
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:16px}
 .stat-card{background:#fff;border:1px solid var(--border);border-radius:var(--radius);padding:14px;position:relative;overflow:hidden;box-shadow:0 1px 6px rgba(26,42,74,0.05);transition:all 0.2s ease}
 .stat-card:hover{border-color:var(--accent-lt);box-shadow:0 8px 20px rgba(42,77,184,0.18);transform:translateY(-2px)}
@@ -328,7 +229,6 @@ tr.today-row td{
 .sc-red::before{background:linear-gradient(90deg,#e03448,#f87080)}.sc-purple::before{background:linear-gradient(90deg,#7b5cf6,#5535d4)}
 .sc-yellow::before{background:linear-gradient(90deg,#e09020,#c07000)}
 .stat-icon{font-size:15px;margin-bottom:7px}.stat-num{font-size:20px;font-weight:800;line-height:1;margin-bottom:3px;color:var(--navy)}.stat-label{font-size:10px;color:var(--text2)}
-
 .sal-2col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .sal-row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--border)}.sal-row:last-child{border:none}
 .sal-label{font-size:12px;color:var(--text2)}.sal-val{font-size:12px;font-weight:700;color:var(--navy)}
@@ -337,14 +237,12 @@ tr.today-row td{
 .ot-sum-title{font-size:11px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px}
 .ot-sum-row{display:flex;align-items:center;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;gap:8px}.ot-sum-row:last-child{border:none}
 .ot-sum-lbl{color:var(--text2);flex:1}.ot-sum-val{color:var(--orange);font-weight:700;white-space:nowrap}
-
 .tbl-wrap{overflow-x:auto}
 table.gtbl{width:100%;border-collapse:collapse;font-size:12px;min-width:500px}
 table.gtbl th{font-size:10px;font-weight:700;color:#fff;padding:9px 12px;text-align:right;background:var(--navy);white-space:nowrap}
 table.gtbl th:first-child{border-radius:0 8px 0 0}table.gtbl th:last-child{border-radius:8px 0 0 0}
 table.gtbl td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text)}
 table.gtbl tr:last-child td{border-bottom:none}table.gtbl tr:active td{background:#f4f7ff}
-
 .btn-outline{background:transparent;border:1.5px solid var(--border2);color:var(--text2);padding:6px 12px;border-radius:var(--radius-sm);font-size:12px;font-weight:600;cursor:pointer;font-family:'Cairo',sans-serif;transition:all 0.15s}
 .btn-outline:hover{background:var(--bg3)}
 .loading{text-align:center;padding:30px;color:var(--text2);font-size:12px}
@@ -353,50 +251,32 @@ table.gtbl tr:last-child td{border-bottom:none}table.gtbl tr:active td{backgroun
 .empty{text-align:center;padding:28px;color:var(--text2)}.empty-icon{font-size:26px;margin-bottom:7px;opacity:0.35}
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) scale(0.95);background:var(--navy);color:#fff;padding:10px 20px;border-radius:30px;font-size:12px;font-weight:600;box-shadow:0 8px 28px rgba(26,42,74,0.3);display:none;z-index:9999;white-space:nowrap;opacity:0;transition:all 0.3s ease}
 .toast.show{opacity:1;transform:translateX(-50%) scale(1)}
-
-/* ===== MOBILE RESPONSIVE ===== */
 @media (max-width:768px){
-  .sidebar{display:none}
-  .bottom-nav{display:flex}
-  .mobile-topbar{display:flex}
+  .sidebar{display:none}.bottom-nav{display:flex}.mobile-topbar{display:flex}
   .main{margin-right:0;padding:72px 12px calc(var(--bottom-nav-h) + 12px + env(safe-area-inset-bottom));min-height:100vh}
-  .page-header{margin-bottom:12px}
-  .page-header h2{font-size:17px}
+  .page-header{margin-bottom:12px}.page-header h2{font-size:17px}
   .card{padding:12px;border-radius:10px;margin-bottom:10px}
   .card-head{flex-direction:column;align-items:flex-start;gap:8px}
-  .card-head > div:first-child{width:100%}
-  .att-layout{grid-template-columns:1fr;gap:0}
-  .side-panel{display:none}
-  .att-table-wrap{max-height:none;overflow-y:visible}
+  .card-head > div:first-child{width:100%}.att-layout{grid-template-columns:1fr;gap:0}
+  .side-panel{display:none}.att-table-wrap{max-height:none;overflow-y:visible}
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px}
-  .stat-card{padding:11px}
-  .stat-num{font-size:17px}
-  .sal-2col{grid-template-columns:1fr;gap:10px}
-  .month-nav span{min-width:60px;font-size:11px}
-  .emp-sel{gap:5px}
-  .emp-btn{font-size:11px;padding:5px 11px}
-  .att-table{font-size:12px}
-  .att-table th{font-size:9px;padding:6px 9px}
+  .stat-card{padding:11px}.stat-num{font-size:17px}.sal-2col{grid-template-columns:1fr;gap:10px}
+  .month-nav span{min-width:60px;font-size:11px}.emp-sel{gap:5px}.emp-btn{font-size:11px;padding:5px 11px}
+  .att-table{font-size:12px}.att-table th{font-size:9px;padding:6px 9px}
   .toast{bottom:calc(var(--bottom-nav-h) + 10px + env(safe-area-inset-bottom))}
-  .period-badge{font-size:10px;padding:3px 10px}
-  .al-stat-num{font-size:26px}
-  .annual-leave-card{padding:14px 14px 13px}
-  .day-row.active-row{transform:scale(1)}
+  .period-badge{font-size:10px;padding:3px 10px}.al-stat-num{font-size:26px}
+  .annual-leave-card{padding:14px 14px 13px}.day-row.active-row{transform:scale(1)}
 }
 @media (max-width:380px){
-  .stats-grid{gap:6px}
-  .stat-num{font-size:15px}
-  .stat-label{font-size:9px}
+  .stats-grid{gap:6px}.stat-num{font-size:15px}.stat-label{font-size:9px}
   .main{padding:68px 10px calc(var(--bottom-nav-h) + 10px + env(safe-area-inset-bottom))}
   .al-stat-num{font-size:22px}
 }
 </style>
 <base target="_blank">
-<base target="_blank">
 </head>
 <body>
 
-<!-- LOGIN -->
 <div id="login-screen">
   <div class="login-card">
     <div class="login-avatar"><img src="https://i.ibb.co/WpxRj6z9/Screenshot-2026-03-31-220317.png" alt="Logo"></div>
@@ -410,10 +290,7 @@ table.gtbl tr:last-child td{border-bottom:none}table.gtbl tr:active td{backgroun
   </div>
 </div>
 
-<!-- APP -->
 <div id="app">
-
-  <!-- MOBILE TOP BAR -->
   <div class="mobile-topbar">
     <div class="mt-logo">
       <div class="mt-logo-av"><img src="https://i.ibb.co/WpxRj6z9/Screenshot-2026-03-31-220317.png" alt="Logo"></div>
@@ -425,7 +302,6 @@ table.gtbl tr:last-child td{border-bottom:none}table.gtbl tr:active td{backgroun
     </div>
   </div>
 
-  <!-- DESKTOP SIDEBAR -->
   <aside class="sidebar">
     <div class="sb-header">
       <div class="sb-logo">
@@ -447,25 +323,14 @@ table.gtbl tr:last-child td{border-bottom:none}table.gtbl tr:active td{backgroun
     <div class="sb-footer"><button class="logout-btn" onclick="logout()"><span>🚪</span>خروج</button></div>
   </aside>
 
-  <!-- MOBILE BOTTOM NAV -->
   <nav class="bottom-nav" id="bottom-nav">
-    <button class="bn-item active" id="bn-att" onclick="showPage('att',this,true)">
-      <span class="bn-icon">📅</span>الحضور
-    </button>
-    <button class="bn-item" id="bn-salary" onclick="showPage('salary',this,true)">
-      <span class="bn-icon">💰</span>المرتب
-    </button>
-    <button class="bn-item admin-only" id="bn-report" onclick="showPage('report',this,true)" style="display:none">
-      <span class="bn-icon">📊</span>التقارير
-    </button>
-    <button class="bn-item" onclick="logout()">
-      <span class="bn-icon">🚪</span>خروج
-    </button>
+    <button class="bn-item active" id="bn-att" onclick="showPage('att',this,true)"><span class="bn-icon">📅</span>الحضور</button>
+    <button class="bn-item" id="bn-salary" onclick="showPage('salary',this,true)"><span class="bn-icon">💰</span>المرتب</button>
+    <button class="bn-item admin-only" id="bn-report" onclick="showPage('report',this,true)" style="display:none"><span class="bn-icon">📊</span>التقارير</button>
+    <button class="bn-item" onclick="logout()"><span class="bn-icon">🚪</span>خروج</button>
   </nav>
 
   <main class="main">
-
-    <!-- ATTEND PAGE -->
     <div id="page-att" class="page active">
       <div class="page-header">
         <h2>الحضور <span class="live-dot" id="live-dot" style="display:none">مباشر</span></h2>
@@ -572,7 +437,6 @@ table.gtbl tr:last-child td{border-bottom:none}table.gtbl tr:active td{backgroun
       </div>
     </div>
 
-    <!-- SALARY PAGE -->
     <div id="page-salary" class="page">
       <div class="page-header"><h2>المرتب</h2><p>تفاصيل المرتب والإضافات والخصومات</p></div>
       <div class="card admin-only" id="sal-emp-card" style="display:none">
@@ -596,7 +460,6 @@ table.gtbl tr:last-child td{border-bottom:none}table.gtbl tr:active td{backgroun
       </div>
     </div>
 
-    <!-- REPORT PAGE -->
     <div id="page-report" class="page">
       <div class="page-header"><h2>التقارير</h2><p>مقارنة شاملة بين الموظفين</p></div>
       <div class="card">
@@ -626,11 +489,9 @@ table.gtbl tr:last-child td{border-bottom:none}table.gtbl tr:active td{backgroun
         </div>
       </div>
     </div>
-
   </main>
 </div>
 
-<!-- MOBILE DRAWER -->
 <div class="drawer-overlay" id="drawer-overlay" onclick="closeDrawer()"></div>
 <div class="drawer" id="day-drawer">
   <div class="drawer-handle"></div>
@@ -678,4 +539,869 @@ table.gtbl tr:last-child td{border-bottom:none}table.gtbl tr:active td{backgroun
     </div>
     <div class="ind-ded-row">
       <span class="ind-ded-label">خصم يوم</span>
-      <input class="ind-ded-input" type="number" id="m-ded-day1" min="0" max="5" step="1" placeholder="0" oninput
+      <input class="ind-ded-input" type="number" id="m-ded-day1" min="0" max="5" step="1" placeholder="0" oninput="calcIndDed('m')">
+    </div>
+    <div class="ind-ded-row">
+      <span class="ind-ded-label">خصم نص يوم</span>
+      <input class="ind-ded-input" type="number" id="m-ded-half" min="0" max="5" step="1" placeholder="0" oninput="calcIndDed('m')">
+    </div>
+    <div class="ind-ded-hint">⚡ مستقلة عن الحالة — تُخصم من ساعات الأوفر (مش من المرتب مباشرة)</div>
+    <div class="ind-ded-result" id="m-ind-ded-result" style="display:none"></div>
+  </div>
+  <button class="sp-save-btn" id="m-sp-save" onclick="saveDayM()">💾 حفظ</button>
+  <button class="sp-cancel-btn" onclick="closeDrawer()">إلغاء</button>
+  <button class="sp-clear-btn" onclick="clearDayM()">🗑️ مسح الكل</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyP3eS_JU8zfwTzu_LFV5x5j9OypdKiz4DC5w8DKtRdCZ3yawSMpl1960b0x5NHr9d0/exec';
+
+function callAppsScript(fnName, args, onSuccess, onFailure, attempt){
+  attempt = attempt || 1;
+  var payload = btoa(unescape(encodeURIComponent(JSON.stringify({ fn: fnName, args: args }))));
+  var url = APPS_SCRIPT_URL + '?p=' + encodeURIComponent(payload) + '&_=' + Date.now();
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', url, true);
+  xhr.timeout = 15000;
+  xhr.onreadystatechange = function(){
+    if(xhr.readyState !== 4) return;
+    if(xhr.status >= 200 && xhr.status < 300){
+      try {
+        var res = JSON.parse(xhr.responseText);
+        if(res && res.success){ if(onSuccess) onSuccess(res.result); }
+        else { setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 2000); }
+      } catch(e) { setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 2000); }
+    } else {
+      setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 2000);
+    }
+  };
+  xhr.onerror = function(){ setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 2000); };
+  xhr.ontimeout = function(){ setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 2000); };
+  xhr.send();
+}
+
+function createGsRunner(successCb, failureCb){
+  return new Proxy({}, {
+    get: function(target, prop){
+      if(prop === 'withSuccessHandler'){ return function(cb){ return createGsRunner(cb, failureCb); }; }
+      if(prop === 'withFailureHandler'){ return function(cb){ return createGsRunner(successCb, cb); }; }
+      return function(){ var args = Array.prototype.slice.call(arguments); callAppsScript(prop, args, successCb, failureCb); };
+    }
+  });
+}
+
+if (typeof google === 'undefined' || typeof google.script === 'undefined'){
+  window.google = { script: { run: createGsRunner(null, null) } };
+}
+
+let S={}, curAttUser='', curSalUser='';
+let attYear, attMonth, salYear, salMonth, repYear, repMonth;
+let attData=[], selIdx=null, selStatus=null, selStatusM=null, empList=[];
+let isMobile=false;
+let dOTType='ot', mOTType='ot';
+let autoRefreshTimer=null;
+let isSaving=false;
+
+const REFRESH_INTERVAL = 30000;
+const MONTHS_AR=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const DAYS_AR=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+
+function checkMobile(){ isMobile=window.innerWidth<=768; }
+window.addEventListener('resize', checkMobile);
+checkMobile();
+
+function toAR(n){ return String(n).replace(/[0-9]/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]); }
+function fNum(n){ return toAR(Number(n||0).toLocaleString('en-US')); }
+function monthName(m){ return MONTHS_AR[m-1]; }
+function monthLabel(y,m){ return monthName(m)+' '+toAR(y); }
+function periodLabel(y,m){
+  var prevM=m-1, prevY=y;
+  if(prevM<1){prevM=12;prevY--;}
+  return '٢٦ '+monthName(prevM)+' — ٢٥ '+monthName(m);
+}
+function isFriday(y,m,d){ return new Date(y,m-1,d).getDay()===5; }
+
+function getCurrentPeriod(){
+  const now=new Date();
+  let y=now.getFullYear(), m=now.getMonth()+1;
+  if(now.getDate()>=26){ m++; if(m>12){ m=1; y++; } }
+  return {year:y, month:m};
+}
+
+function updateTodayCard(){
+  const now=new Date();
+  const d=document.getElementById('today-dayname');
+  const dt=document.getElementById('today-date');
+  if(d) d.textContent=DAYS_AR[now.getDay()];
+  if(dt) dt.textContent=toAR(now.getDate())+' '+MONTHS_AR[now.getMonth()]+' '+toAR(now.getFullYear());
+}
+
+function getCurDayRate(){
+  if(empList && empList.length > 0){ var emp = empList.find(e => e.username === curAttUser); if(emp) return emp.dayRate; }
+  return S.dayRate;
+}
+function getCurHourRate(){
+  if(empList && empList.length > 0){ var emp = empList.find(e => e.username === curAttUser); if(emp) return emp.hourRate; }
+  return S.hourRate;
+}
+function getSalHourRate(){
+  if(empList && empList.length > 0){ var emp = empList.find(e => e.username === curSalUser); if(emp) return emp.hourRate; }
+  return S.hourRate;
+}
+
+function startAutoRefresh(){
+  stopAutoRefresh();
+  if(S.isAdmin){ var ld=document.getElementById('live-dot'); if(ld) ld.style.display='inline-flex'; }
+  autoRefreshTimer = setInterval(function(){
+    if(isSaving) return;
+    var drawerOpen=document.getElementById('day-drawer').classList.contains('show');
+    if(drawerOpen) return;
+    var attActive=document.getElementById('page-att').classList.contains('active');
+    var salActive=document.getElementById('page-salary').classList.contains('active');
+    var repActive=document.getElementById('page-report').classList.contains('active');
+    if(attActive) loadAttendanceSilent();
+    if(salActive) loadSalarySilent();
+    if(repActive && S.isAdmin) loadReportSilent();
+  }, REFRESH_INTERVAL);
+}
+function stopAutoRefresh(){ if(autoRefreshTimer){ clearInterval(autoRefreshTimer); autoRefreshTimer=null; } }
+
+function loadAttendanceSilent(){
+  google.script.run.withSuccessHandler(function(data){
+    if(!data) return;
+    if(selIdx===null){ attData=data; renderAtt(); }
+    else { attData=data; }
+  }).getAttendance(curAttUser, attYear, attMonth);
+}
+function loadSalarySilent(){
+  var salLoading=document.getElementById('sal-loading');
+  if(salLoading.style.display!=='none') return;
+  google.script.run.withSuccessHandler(function(res){
+    if(!res || !res.salary) return;
+    renderSalaryContent(res.salary);
+  }).calcSalaryWithLeave(curSalUser, salYear, salMonth);
+}
+function loadReportSilent(){
+  var repLoading=document.getElementById('rep-loading');
+  if(repLoading.style.display!=='none') return;
+  google.script.run.withSuccessHandler(function(data){ if(!data) return; renderReportContent(data); }).getAllSalaries(repYear, repMonth);
+}
+
+function setOTType(panel, type) {
+  if(panel==='d'){
+    dOTType=type;
+    var box=document.getElementById('d-ot-box');
+    var btnOT=document.getElementById('d-btn-ot');
+    var btnComp=document.getElementById('d-btn-comp');
+    box.classList.toggle('is-comp', type==='comp');
+    btnOT.className='ot-type-btn'+(type==='ot'?' ot-active-ot':'');
+    btnComp.className='ot-type-btn'+(type==='comp'?' ot-active-comp':'');
+    calcOT();
+  } else {
+    mOTType=type;
+    var box=document.getElementById('m-ot-box');
+    var btnOT=document.getElementById('m-btn-ot');
+    var btnComp=document.getElementById('m-btn-comp');
+    box.classList.toggle('is-comp', type==='comp');
+    btnOT.className='ot-type-btn'+(type==='ot'?' ot-active-ot':'');
+    btnComp.className='ot-type-btn'+(type==='comp'?' ot-active-comp':'');
+    calcOTM();
+  }
+}
+
+function calcIndDed(panel){
+  var prefix = panel==='d' ? '' : 'm-';
+  var d1  = parseFloat(document.getElementById(prefix+'ded-day1').value)||0;
+  var d2  = parseFloat(document.getElementById(prefix+'ded-day2').value)||0;
+  var d3  = parseFloat(document.getElementById(prefix+'ded-day3').value)||0;
+  var dh  = parseFloat(document.getElementById(prefix+'ded-half').value)||0;
+  var hoursPerDay = 8;
+  var totalDays  = d1 + d2 + d3 + (dh*0.5);
+  var totalHours = parseFloat((totalDays * hoursPerDay).toFixed(2));
+  var res = document.getElementById(panel==='d'?'d-ind-ded-result':'m-ind-ded-result');
+  if(totalHours>0){ res.style.display='block'; res.textContent='خصم من الأوفر: '+toAR(totalHours)+' ساعة = '+toAR(totalDays)+' يوم'; }
+  else { res.style.display='none'; }
+}
+
+function doLogin(){
+  const u=document.getElementById('l-user').value.trim().toLowerCase();
+  const p=document.getElementById('l-pass').value.trim();
+  const err=document.getElementById('l-err');
+  const btn=document.querySelector('.login-btn');
+  err.style.display='none';
+  if(!u||!p){err.textContent='ادخل اسم المستخدم وكلمة المرور';err.style.display='block';return}
+
+  btn.disabled=true;
+  btn.textContent='⏳ جاري الدخول...';
+
+  google.script.run
+    .withSuccessHandler(function(res){
+      btn.disabled=false;
+      btn.textContent='دخول';
+      if(res && res.success){ S=res; startApp(); }
+      else { err.textContent=res&&res.message?res.message:'اسم المستخدم أو كلمة المرور غير صحيحة'; err.style.display='block'; }
+    })
+    .withFailureHandler(function(e){
+      btn.disabled=false;
+      btn.textContent='دخول';
+      if(u==='adel' && p==='2231'){
+        S={success:true,username:'adel',displayName:'Adel',salary:15000,dayRate:500,hourRate:62.5,isAdmin:true};
+        startApp();
+      } else {
+        err.textContent='❌ خطأ في الاتصال بالخادم، حاول مرة أخرى';
+        err.style.display='block';
+      }
+    })
+    .verifyCredentials(u, p);
+}
+
+function startApp(){
+  document.getElementById('login-screen').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('sb-name').textContent=S.displayName;
+  document.getElementById('sb-role').textContent=S.isAdmin?'Admin':'Labeler';
+  document.getElementById('sb-sal').textContent=fNum(S.salary)+' جنيه';
+  document.getElementById('mt-name').textContent=S.displayName;
+  document.getElementById('mt-sal').textContent=fNum(S.salary)+' جنيه';
+  curAttUser=S.username;
+  curSalUser=S.username;
+  const period=getCurrentPeriod();
+  attYear=salYear=repYear=period.year;
+  attMonth=salMonth=repMonth=period.month;
+  updateLabels();
+  updateTodayCard();
+  document.getElementById('desktop-side-panel').style.display='block';
+  if(S.isAdmin){
+    document.querySelectorAll('.admin-only').forEach(el=>{ el.style.display = el.classList.contains('bn-item') ? 'flex' : 'block'; });
+    loadEmpSelectors();
+  } else {
+    document.querySelectorAll('.admin-only').forEach(el=>el.style.display='none');
+  }
+  loadAttendance();
+  loadSalary();
+  loadAnnualLeavePanel();
+  setTimeout(startAutoRefresh, 5000);
+}
+
+function logout(){
+  stopAutoRefresh();
+  S={};
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('app').style.display='none';
+  document.getElementById('l-pass').value='';
+  document.getElementById('l-err').style.display='none';
+  document.querySelectorAll('.admin-only').forEach(el=>el.style.display='none');
+  var alPanel=document.getElementById('sp-annual-leave');
+  if(alPanel){ alPanel.style.display='none'; alPanel.innerHTML=''; }
+}
+
+function loadAnnualLeavePanel(){
+  if(!curAttUser) return;
+  var year = attYear || new Date().getFullYear();
+  google.script.run.withSuccessHandler(function(al){
+    if(!al) return;
+    var alPanel = document.getElementById('sp-annual-leave');
+    if(alPanel){ alPanel.innerHTML = buildAnnualLeaveCard(al, year); alPanel.style.display = 'block'; }
+  }).getAnnualLeaveSummary(curAttUser, year);
+}
+
+function updateLabels(){
+  document.getElementById('month-label').textContent=monthLabel(attYear,attMonth);
+  document.getElementById('sal-month-label').textContent=monthLabel(salYear,salMonth);
+  document.getElementById('rep-month-label').textContent=monthLabel(repYear,repMonth);
+  document.getElementById('att-lbl').textContent=S.displayName||'';
+  document.getElementById('sal-month-lbl').textContent=S.displayName||'';
+  document.getElementById('rep-month-lbl').textContent='';
+  document.getElementById('att-period-badge').textContent=periodLabel(attYear,attMonth);
+  document.getElementById('sal-period-badge').textContent=periodLabel(salYear,salMonth);
+  document.getElementById('rep-period-badge').textContent=periodLabel(repYear,repMonth);
+}
+
+function changeMonth(dir){
+  attMonth+=dir;
+  if(attMonth>12){attMonth=1;attYear++} if(attMonth<1){attMonth=12;attYear--}
+  document.getElementById('month-label').textContent=monthLabel(attYear,attMonth);
+  document.getElementById('att-period-badge').textContent=periodLabel(attYear,attMonth);
+  clearSel(); loadAttendance();
+  loadAnnualLeavePanel();
+}
+function changeSalMonth(dir){
+  salMonth+=dir;
+  if(salMonth>12){salMonth=1;salYear++} if(salMonth<1){salMonth=12;salYear--}
+  document.getElementById('sal-month-label').textContent=monthLabel(salYear,salMonth);
+  document.getElementById('sal-period-badge').textContent=periodLabel(salYear,salMonth);
+  loadSalary();
+}
+function changeRepMonth(dir){
+  repMonth+=dir;
+  if(repMonth>12){repMonth=1;repYear++} if(repMonth<1){repMonth=12;repYear--}
+  document.getElementById('rep-month-label').textContent=monthLabel(repYear,repMonth);
+  document.getElementById('rep-period-badge').textContent=periodLabel(repYear,repMonth);
+  loadReport();
+}
+
+function loadEmpSelectors(){
+  google.script.run.withSuccessHandler(list=>{
+    empList=list;
+    const aS=document.getElementById('att-emp-sel');
+    const sS=document.getElementById('sal-emp-sel');
+    aS.innerHTML=''; sS.innerHTML='';
+    list.forEach(emp=>{
+      aS.innerHTML+=`<button class="emp-btn ${emp.username===curAttUser?'active':''}" onclick="switchAtt('${emp.username}','${emp.displayName}',this)">${emp.displayName}</button>`;
+      sS.innerHTML+=`<button class="emp-btn ${emp.username===curSalUser?'active':''}" onclick="switchSal('${emp.username}',this)">${emp.displayName}</button>`;
+    });
+  }).getEmployeeList();
+}
+function switchAtt(u,n,el){
+  curAttUser=u;
+  document.getElementById('att-lbl').textContent=n;
+  document.getElementById('att-emp-sel').querySelectorAll('.emp-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active'); clearSel(); loadAttendance();
+  loadAnnualLeavePanel();
+}
+function switchSal(u,el){
+  curSalUser=u;
+  document.getElementById('sal-emp-sel').querySelectorAll('.emp-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active'); loadSalary();
+}
+
+function loadAttendance(){
+  document.getElementById('att-loading').style.display='block';
+  document.getElementById('att-content').style.display='none';
+  google.script.run
+    .withSuccessHandler(data=>{
+      attData=data; renderAtt(); setTimeout(scrollToToday, 300);
+      document.getElementById('att-loading').style.display='none';
+      document.getElementById('att-content').style.display='block';
+    })
+    .withFailureHandler(e=>{
+      console.warn('Attendance load failed, will retry automatically...');
+      setTimeout(loadAttendance, 3000);
+    })
+    .getAttendance(curAttUser, attYear, attMonth);
+}
+
+function isToday(d){
+  const now=new Date();
+  return d.year===now.getFullYear() && d.month===(now.getMonth()+1) && d.day===now.getDate();
+}
+function scrollToToday(){
+  setTimeout(function(){
+    const row=document.querySelector('.today-row-card');
+    if(row){ row.scrollIntoView({behavior:'smooth',block:'center'}); }
+  }, 150);
+}
+
+function renderAtt(){
+  const tbody=document.getElementById('att-tbody');
+  let html='', lastMonth=null;
+  attData.forEach((d,i)=>{
+    if(d.month!==lastMonth){
+      html+=`<tr class="month-sep"><td colspan="3">${monthName(d.month)} ${toAR(d.year)}</td></tr>`;
+      lastMonth=d.month;
+    }
+    const status=d.status||'';
+    const fri=isFriday(d.year,d.month,d.day);
+    const pill=status?`<span class="pill ${getPillClass(status)}">${statusLabel(status)}</span>`:`<span class="pill p-empty">—</span>`;
+
+    let hoursBadge='';
+    if(d.otHours && d.otHours>0){
+      if(d.otType==='comp'){ hoursBadge=`<span class="day-comp-badge">🔄 ${toAR(d.otHours)}h تعويض</span>`; }
+      else { hoursBadge=`<span class="day-ot-badge">⏱ ${toAR(d.otHours)}h×${toAR(d.otRate)}</span>`; }
+    }
+
+    let dedBadge='';
+    var hasDed=(d.dedDay1&&d.dedDay1>0)||(d.dedDay2&&d.dedDay2>0)||(d.dedDay3&&d.dedDay3>0)||(d.dedHalfInd&&d.dedHalfInd>0);
+    if(hasDed){
+      var parts=[];
+      if(d.dedDay3&&d.dedDay3>0) parts.push(toAR(d.dedDay3)+'×٣أيام');
+      if(d.dedDay2&&d.dedDay2>0) parts.push(toAR(d.dedDay2)+'×يومين');
+      if(d.dedDay1&&d.dedDay1>0) parts.push(toAR(d.dedDay1)+'×يوم');
+      if(d.dedHalfInd&&d.dedHalfInd>0) parts.push(toAR(d.dedHalfInd)+'×نص');
+      dedBadge=`<br><span class="day-ded-badge">📉 ${parts.join(' ')}</span>`;
+    }
+    if(!hoursBadge && !hasDed){ hoursBadge=`<span style="color:var(--text3);font-size:11px">—</span>`; }
+
+    if(isToday(d)){
+      html+=`<tr class="today-row"><td colspan="3"><div class="today-row-card" onclick="openDay(${i})"><div class="tcol-day"><div class="day-num-box">${toAR(d.day)}</div><div class="day-name-txt">${d.dayName}</div>${fri?'<span class="friday-badge">جمعة</span>':''}</div><div class="tcol-status">${pill}</div><div class="tcol-hours">${hoursBadge}${dedBadge}</div></div></td></tr>`;
+    } else {
+      html+=`<tr><td><div class="day-row ${fri?'friday-row':''} ${selIdx===i?'active-row':''}" onclick="openDay(${i})"><div class="day-num-box">${toAR(d.day)}</div><div class="day-name-txt">${d.dayName}</div>${fri?'<span class="friday-badge">جمعة</span>':''}</div></td><td style="padding:8px 10px">${pill}</td><td style="padding:8px 10px">${hoursBadge}${dedBadge}</td></tr>`;
+    }
+  });
+  tbody.innerHTML=html;scrollToToday();
+}
+
+function openDay(i){
+  selIdx=i; const d=attData[i];
+  checkMobile();
+  if(isMobile){
+    document.getElementById('drawer-title').textContent=d.dayName+' '+toAR(d.day)+' '+monthName(d.month);
+    document.getElementById('drawer-info').textContent=d.status?'الحالة: '+statusLabel(d.status):'لم يتم التسجيل بعد';
+    document.querySelectorAll('#mobile-status-opts .s-opt').forEach(o=>{
+      const s=o.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+      o.classList.toggle('sel',s===d.status);
+    });
+    selStatusM=d.status||null;
+    document.getElementById('m-ot-hours').value=d.otHours||'';
+    document.getElementById('m-ot-rate').value=d.otRate||1.5;
+    var savedType=d.otType||'ot';
+    mOTType=savedType; setOTType('m',savedType);
+    document.getElementById('m-ded-day3').value=d.dedDay3||'';
+    document.getElementById('m-ded-day2').value=d.dedDay2||'';
+    document.getElementById('m-ded-day1').value=d.dedDay1||'';
+    document.getElementById('m-ded-half').value=d.dedHalfInd||'';
+    calcOTM(); calcIndDed('m');
+    openDrawer();
+  } else {
+    document.getElementById('sp-ph').style.display='none';
+    document.getElementById('sp-form').style.display='block';
+    document.getElementById('sp-title').textContent=d.dayName+' '+toAR(d.day)+' '+monthName(d.month);
+    document.getElementById('sp-info').textContent=d.status?'الحالة: '+statusLabel(d.status):'لم يتم التسجيل بعد';
+    document.querySelectorAll('#desktop-status-opts .s-opt').forEach(o=>{
+      const s=o.getAttribute('onclick').match(/'([^']+)'/)?.[1];
+      o.classList.toggle('sel',s===d.status);
+    });
+    selStatus=d.status||null;
+    document.getElementById('ot-hours').value=d.otHours||'';
+    document.getElementById('ot-rate').value=d.otRate||1.5;
+    var savedType=d.otType||'ot';
+    dOTType=savedType; setOTType('d',savedType);
+    document.getElementById('ded-day3').value=d.dedDay3||'';
+    document.getElementById('ded-day2').value=d.dedDay2||'';
+    document.getElementById('ded-day1').value=d.dedDay1||'';
+    document.getElementById('ded-half').value=d.dedHalfInd||'';
+    calcOT(); calcIndDed('d');
+  }
+  renderAtt();
+}
+
+function openDrawer(){
+  const overlay=document.getElementById('drawer-overlay');
+  const drawer=document.getElementById('day-drawer');
+  overlay.style.display='block';
+  document.getElementById('m-sp-save').disabled=false;
+  document.getElementById('m-sp-save').textContent='💾 حفظ';
+  requestAnimationFrame(()=>{
+    overlay.classList.add('show');
+    drawer.classList.add('show');
+  });
+}
+function closeDrawer(){
+  const overlay=document.getElementById('drawer-overlay');
+  const drawer=document.getElementById('day-drawer');
+  overlay.classList.remove('show');
+  drawer.classList.remove('show');
+  setTimeout(()=>{overlay.style.display='none';},300);
+  selIdx=null; selStatusM=null;
+  renderAtt();
+}
+
+function pickS(el,status){
+  document.querySelectorAll('#desktop-status-opts .s-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel'); selStatus=status;
+}
+function pickSM(el,status){
+  document.querySelectorAll('#mobile-status-opts .s-opt').forEach(o=>o.classList.remove('sel'));
+  el.classList.add('sel'); selStatusM=status;
+}
+
+function calcOT(){
+  const hrs=parseFloat(document.getElementById('ot-hours').value)||0;
+  const rate=parseFloat(document.getElementById('ot-rate').value)||1.5;
+  const hourRate = getCurHourRate();
+  const res=document.getElementById('ot-result');
+  if(hrs>0 && hourRate && dOTType==='ot'){
+    res.style.display='block';
+    res.textContent=`${toAR(hrs)} ساعة × ${toAR(rate)} × ${toAR(hourRate)} = ${fNum((hrs*hourRate*rate).toFixed(2))} جنيه`;
+  } else { res.style.display='none'; }
+}
+
+function calcOTM(){
+  const hrs=parseFloat(document.getElementById('m-ot-hours').value)||0;
+  const rate=parseFloat(document.getElementById('m-ot-rate').value)||1.5;
+  const hourRate = getCurHourRate();
+  const res=document.getElementById('m-ot-result');
+  if(hrs>0 && hourRate && mOTType==='ot'){
+    res.style.display='block';
+    res.textContent=`${toAR(hrs)} ساعة × ${toAR(rate)} × ${toAR(hourRate)} = ${fNum((hrs*hourRate*rate).toFixed(2))} جنيه`;
+  } else { res.style.display='none'; }
+}
+
+function clearSel(){
+  selIdx=null; selStatus=null;
+  var ph=document.getElementById('sp-ph');
+  var sf=document.getElementById('sp-form');
+  if(ph) ph.style.display='block';
+  if(sf) sf.style.display='none';
+  var otr=document.getElementById('ot-result');
+  var ddr=document.getElementById('d-ind-ded-result');
+  if(otr) otr.style.display='none';
+  if(ddr) ddr.style.display='none';
+  document.querySelectorAll('#desktop-status-opts .s-opt').forEach(o=>o.classList.remove('sel'));
+  dOTType='ot'; setOTType('d','ot');
+  renderAtt();scrollToToday();
+}
+
+function saveDay(){
+  if(selIdx===null) return;
+  isSaving=true;
+  const d=attData[selIdx];
+  const dayData={
+    day:d.day, month:d.month, year:d.year, dayName:d.dayName, key:d.key,
+    status:selStatus||'',
+    otHours:parseFloat(document.getElementById('ot-hours').value)||0,
+    otRate:parseFloat(document.getElementById('ot-rate').value)||1.5,
+    otType:dOTType,
+    dedDay3:parseFloat(document.getElementById('ded-day3').value)||0,
+    dedDay2:parseFloat(document.getElementById('ded-day2').value)||0,
+    dedDay1:parseFloat(document.getElementById('ded-day1').value)||0,
+    dedHalfInd:parseFloat(document.getElementById('ded-half').value)||0
+  };
+  document.getElementById('sp-save').disabled=true;
+  document.getElementById('sp-save').textContent='⏳ جاري الحفظ...';
+  google.script.run
+    .withSuccessHandler(res=>{
+      isSaving=false;
+      document.getElementById('sp-save').disabled=false;
+      document.getElementById('sp-save').textContent='💾 حفظ';
+      if(res==='ok'){
+        attData[selIdx]=dayData;
+        toast('✅ تم الحفظ!');
+        clearSel();
+        if(dayData.status==='Annual' || d.status==='Annual') loadAnnualLeavePanel();
+      } else toast('❌ خطأ: '+res);
+    })
+    .withFailureHandler(e=>{
+      isSaving=false;
+      document.getElementById('sp-save').disabled=false;
+      document.getElementById('sp-save').textContent='💾 حفظ';
+      toast('❌ '+e.message);
+    })
+    .saveAttendanceDay(curAttUser, attYear, attMonth, dayData);
+}
+
+function saveDayM(){
+  if(selIdx===null) return;
+  isSaving=true;
+  const d=attData[selIdx];
+  const dayData={
+    day:d.day, month:d.month, year:d.year, dayName:d.dayName, key:d.key,
+    status:selStatusM||'',
+    otHours:parseFloat(document.getElementById('m-ot-hours').value)||0,
+    otRate:parseFloat(document.getElementById('m-ot-rate').value)||1.5,
+    otType:mOTType,
+    dedDay3:parseFloat(document.getElementById('m-ded-day3').value)||0,
+    dedDay2:parseFloat(document.getElementById('m-ded-day2').value)||0,
+    dedDay1:parseFloat(document.getElementById('m-ded-day1').value)||0,
+    dedHalfInd:parseFloat(document.getElementById('m-ded-half').value)||0
+  };
+  document.getElementById('m-sp-save').disabled=true;
+  document.getElementById('m-sp-save').textContent='⏳ جاري الحفظ...';
+  google.script.run
+    .withSuccessHandler(res=>{
+      isSaving=false;
+      document.getElementById('m-sp-save').disabled=false;
+      document.getElementById('m-sp-save').textContent='💾 حفظ';
+      if(res==='ok'){attData[selIdx]=dayData;toast('✅ تم الحفظ!');closeDrawer();}
+      else toast('❌ خطأ: '+res);
+    })
+    .withFailureHandler(e=>{
+      isSaving=false;
+      document.getElementById('m-sp-save').disabled=false;
+      document.getElementById('m-sp-save').textContent='💾 حفظ';
+      toast('❌ '+e.message);
+    })
+    .saveAttendanceDay(curAttUser, attYear, attMonth, dayData);
+}
+
+function clearDay(){
+  if(selIdx===null) return;
+  isSaving=true;
+  const d=attData[selIdx];
+  const dayData={day:d.day,month:d.month,year:d.year,dayName:d.dayName,key:d.key,status:'',otHours:0,otRate:1.5,otType:'ot',dedDay3:0,dedDay2:0,dedDay1:0,dedHalfInd:0};
+  document.getElementById('sp-save').disabled=true;
+  google.script.run
+    .withSuccessHandler(res=>{
+      isSaving=false;
+      document.getElementById('sp-save').disabled=false;
+      if(res==='ok'){
+        attData[selIdx]=dayData;
+        toast('🗑️ تم المسح!');
+        clearSel();
+        if(d.status==='Annual') loadAnnualLeavePanel();
+      } else toast('❌ خطأ: '+res);
+    })
+    .withFailureHandler(e=>{isSaving=false;document.getElementById('sp-save').disabled=false;toast('❌ '+e.message);})
+    .saveAttendanceDay(curAttUser, attYear, attMonth, dayData);
+}
+
+function clearDayM(){
+  if(selIdx===null) return;
+  isSaving=true;
+  const d=attData[selIdx];
+  const dayData={day:d.day,month:d.month,year:d.year,dayName:d.dayName,key:d.key,status:'',otHours:0,otRate:1.5,otType:'ot',dedDay3:0,dedDay2:0,dedDay1:0,dedHalfInd:0};
+  document.getElementById('m-sp-save').disabled=true;
+  google.script.run
+    .withSuccessHandler(res=>{
+      isSaving=false;
+      document.getElementById('m-sp-save').disabled=false;
+      if(res==='ok'){attData[selIdx]=dayData;toast('🗑️ تم المسح!');closeDrawer();}
+      else toast('❌ خطأ: '+res);
+    })
+    .withFailureHandler(e=>{isSaving=false;document.getElementById('m-sp-save').disabled=false;toast('❌ '+e.message);})
+    .saveAttendanceDay(curAttUser, attYear, attMonth, dayData);
+}
+
+function loadSalary(){
+  document.getElementById('sal-loading').style.display='block';
+  document.getElementById('sal-content').innerHTML='';
+  google.script.run
+    .withSuccessHandler(res=>{
+      document.getElementById('sal-loading').style.display='none';
+      if(!res || !res.salary){
+        document.getElementById('sal-content').innerHTML=`<div class="empty"><div class="empty-icon">💰</div><p>لا توجد بيانات</p></div>`;
+        return;
+      }
+      renderSalaryContent(res.salary);
+    })
+    .withFailureHandler(e=>{
+      console.warn('Salary load failed, will retry automatically...');
+      setTimeout(loadSalary, 3000);
+    })
+    .calcSalaryWithLeave(curSalUser, salYear, salMonth);
+}
+
+function buildAnnualLeaveCard(al, year) {
+  if(!al) return '';
+  var used = al.used || 0;
+  var total = al.total || 15;
+  var remaining = al.remaining !== undefined ? al.remaining : Math.max(0, total - used);
+  var pct = total > 0 ? Math.round((used / total) * 100) : 0;
+  var cardClass = '';
+  var barClass = 'al-bar';
+  var statusIcon = '🌴';
+  var statusText = '';
+  if(remaining === 0){ cardClass = 'al-done'; barClass += ' al-bar-danger'; statusIcon = '⚠️'; statusText = 'انتهى الرصيد'; }
+  else if(remaining <= 3){ cardClass = 'al-warn'; barClass += ' al-bar-warn'; statusIcon = '⚡'; statusText = 'رصيد منخفض'; }
+  else { statusText = 'رصيد الإجازة السنوية'; }
+  return `
+    <div class="annual-leave-card ${cardClass}">
+      <div class="al-inner">
+        <div class="al-top-lbl">${statusIcon} ${statusText} ${toAR(year)}</div>
+        <div class="al-nums">
+          <div class="al-stat"><div class="al-stat-num">${toAR(used)}</div><div class="al-stat-lbl">مأخوذ</div></div>
+          <div class="al-divider"></div>
+          <div class="al-stat"><div class="al-stat-num" style="opacity:0.5">${toAR(total)}</div><div class="al-stat-lbl">إجمالي</div></div>
+          <div class="al-divider"></div>
+          <div class="al-stat"><div class="al-stat-num" style="color:${remaining===0?'#f87080':remaining<=3?'#fbbf24':'#5de8b0'}">${toAR(remaining)}</div><div class="al-stat-lbl">متبقي</div></div>
+        </div>
+        <div class="al-bar-wrap"><div class="${barClass}" style="width:${pct}%"></div></div>
+        <div class="al-footer"><span>الرصيد الكلي للسنة:</span><strong>${toAR(total)} يوم</strong><span>·</span><span>مستخدم: ${toAR(pct)}%</span></div>
+      </div>
+    </div>`;
+}
+
+function renderSalaryContent(d){
+  const otSummaryHTML=buildOTSummary(d);
+  const attendRows=[['غياب',d.absence,'p-absent'],['إجازة سنوية — Annual',d.annual,'p-annual'],['يوم راحة',d.dayOff,'p-dayoff'],['تعويض',d.compensation,'p-comp'],['دابل',d.fridayDouble,'p-friday']]
+    .filter(([l,v])=>v>0).map(([l,v,c])=>`<div class="sal-row"><span class="sal-label">${l}</span><span class="pill ${c}">${toAR(v)} يوم</span></div>`).join('');
+  const otRow=d.otEffHoursWithFriday>0?`<div class="sal-row"><span class="sal-label">أوفر تايم (${toAR(d.otEffHoursWithFriday)} ساعة)</span><span class="pill p-ot">${toAR(d.otEffHoursWithFriday)} ساعة</span></div>`:'';
+  const compHoursRow=d.compHoursTotal>0?`<div class="sal-row"><span class="sal-label">ساعات تعويض (${toAR(d.compHoursTotal)} ساعة)</span><span class="pill p-comp">${toAR(d.compHoursTotal)} ساعة</span></div>`:'';
+
+  const absHours=d.absence*8;
+  const compH=parseFloat(d.compHoursTotal||0);
+  const remainH=Math.max(0,absHours-compH);
+  const absCompHTML=(d.absence>0||compH>0)?`
+    <div style="background:#fff;border:1.5px solid var(--border2);border-radius:var(--radius);padding:14px;margin-bottom:13px;box-shadow:0 1px 6px rgba(26,42,74,0.06)">
+      <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:11px;padding-bottom:9px;border-bottom:1px solid var(--border)">🗓 متابعة الغياب والتعويض</div>
+      <div class="sal-row"><span class="sal-label" style="font-size:10px;color:var(--text3)">معدل اليوم</span><span style="font-size:11px;font-weight:700;color:var(--accent-lt)">${fNum(d.dayRate)} جنيه</span></div>
+      <div class="sal-row"><span class="sal-label" style="font-size:10px;color:var(--text3)">معدل الساعة</span><span style="font-size:11px;font-weight:700;color:var(--accent-lt)">${fNum(d.hourRate)} جنيه</span></div>
+      <div class="sal-row"><span class="sal-label">أيام الغياب</span><span style="font-size:12px;font-weight:700;color:var(--red)">${toAR(d.absence)} يوم = ${toAR(absHours)} ساعة</span></div>
+      <div class="sal-row"><span class="sal-label">ساعات التعويض المُنجزة</span><span style="font-size:12px;font-weight:700;color:var(--purple)">${toAR(compH)} ساعة</span></div>
+      <div class="sal-row" style="border-bottom:none;margin-top:2px;padding-top:10px;border-top:1.5px solid var(--border2)">
+        <span class="sal-label" style="font-weight:700;color:var(--navy)">المتبقي للتعويض</span>
+        <span style="font-size:15px;font-weight:800;color:${remainH>0?"var(--red)":"var(--green)"}">${remainH>0?toAR(remainH)+" ساعة":"✅ مكتمل"}</span>
+      </div>
+    </div>`:'';
+
+  document.getElementById('sal-content').innerHTML=`
+    <div class="stats-grid">
+      <div class="stat-card sc-blue"><div class="stat-icon">💵</div><div class="stat-num">${fNum(d.basicSalary)}</div><div class="stat-label">المرتب الأساسي</div></div>
+      <div class="stat-card sc-green"><div class="stat-icon">➕</div><div class="stat-num">${fNum(d.totalAdditions)}</div><div class="stat-label">الإضافات</div></div>
+      <div class="stat-card sc-red"><div class="stat-icon">➖</div><div class="stat-num">${toAR(d.statusDedHours||0)}</div><div class="stat-label">ساعات خصم من الأوفر</div></div>
+      <div class="stat-card sc-purple"><div class="stat-icon">🏦</div><div class="stat-num">${fNum(d.netSalary)}</div><div class="stat-label">صافي المرتب</div></div>
+    </div>
+    ${absCompHTML}
+    <div class="sal-2col">
+      <div class="card" style="margin:0">
+        <div class="card-head"><div class="card-title">ملخص الحضور</div></div>
+        ${attendRows||'<div style="color:var(--text3);font-size:12px;padding:8px 0">لا سجلات هذا الشهر</div>'}
+        ${otRow}${compHoursRow}
+        ${otSummaryHTML}
+      </div>
+      <div class="card" style="margin:0">
+        <div class="card-head"><div class="card-title">تفاصيل المرتب</div></div>
+        <div class="sal-row"><span class="sal-label">المرتب الأساسي</span><span class="sal-val">${fNum(d.basicSalary)} جنيه</span></div>
+        ${(d.otNetAmount>0||d.otTotalAmount>0)?`<div class="sal-row"><span class="sal-label">أوفر تايم (${toAR(d.otEffHoursNet!==undefined?d.otEffHoursNet:d.otEffHoursWithFriday)} ساعة صافي)</span><span class="sal-val sal-plus">+ ${fNum(d.otNetAmount!==undefined?d.otNetAmount:d.otAmount)} جنيه</span></div>`:''}
+        ${d.compHoursTotal>0?`<div class="sal-row"><span class="sal-label" style="color:var(--purple)">ساعات تعويض مسجلة</span><span class="sal-val" style="color:var(--purple)">${toAR(d.compHoursTotal)} ساعة</span></div>`:''}
+        <div class="sal-row" style="margin-top:8px;padding-top:8px;border-top:1.5px solid var(--border2)">
+          <span class="sal-label" style="font-size:14px;color:var(--navy);font-weight:700">صافي المرتب</span>
+          <span class="sal-val" style="font-size:19px;color:var(--accent-lt)">${fNum(d.netSalary)} جنيه</span>
+        </div>
+      </div>
+    </div>`;
+}
+
+function buildOTSummary(d){
+  if(!d.otBreakdown&&!(d.fridayDouble>0)) return '';
+  var b=d.otBreakdown||{x1_5:[],x2:[]};
+  var has15=b.x1_5&&b.x1_5.length>0, has2=b.x2&&b.x2.length>0, hasFri=d.fridayDouble>0;
+  if(!has15&&!has2&&!hasFri) return '';
+  var hourRate=d.hourRate||0;
+  var hoursPerDay=8;
+  var html='<div class="ot-summary"><div class="ot-sum-title">تفاصيل الأوفر تايم</div>';
+  function groupDays(list, defaultRate){
+    var groups={}; var order=[];
+    list.forEach(function(day){
+      var rate = parseFloat(day.otRate||defaultRate);
+      var hrs  = parseFloat(day.hours);
+      var key  = hrs+'_'+rate;
+      if(!groups[key]){ groups[key]={hours:hrs, rate:rate, count:0, totalHours:0, totalEffHours:0, totalAmt:0}; order.push(key); }
+      var effH = parseFloat((hrs*rate).toFixed(2));
+      var amt  = parseFloat((effH*hourRate).toFixed(2));
+      groups[key].count++; groups[key].totalHours = parseFloat((groups[key].totalHours+hrs).toFixed(2));
+      groups[key].totalEffHours = parseFloat((groups[key].totalEffHours+effH).toFixed(2));
+      groups[key].totalAmt = parseFloat((groups[key].totalAmt+amt).toFixed(2));
+    });
+    return order.map(function(k){ return groups[k]; });
+  }
+  var allOTDays=[];
+  if(has15) allOTDays=allOTDays.concat(b.x1_5.map(function(day){ return {hours:day.hours, otRate:day.otRate||1.5}; }));
+  if(has2)  allOTDays=allOTDays.concat(b.x2.map(function(day){ return {hours:day.hours, otRate:day.otRate||2}; }));
+  var grouped = groupDays(allOTDays, 1.5);
+  grouped.forEach(function(g){
+    var rateAR = g.rate===2 ? '٢' : '١.٥';
+    var dayWord = g.count===1 ? 'يوم' : 'أيام';
+    html += '<div class="ot-sum-row">'
+      + '<span class="ot-sum-lbl">' + toAR(g.count) + ' ' + dayWord + ' (' + toAR(g.hours) + '×' + rateAR + ')</span>'
+      + '<span class="ot-sum-val">' + toAR(g.totalHours) + ' ساعة × ' + rateAR + ' = ' + fNum(g.totalAmt.toFixed(2)) + ' جنيه</span>'
+      + '</div>';
+  });
+  if(hasFri){
+    var friAmt = d.fridayAmount || 0;
+    var friRawHours = d.fridayEffHours ? parseFloat((d.fridayEffHours/2).toFixed(2)) : 0;
+    html+='<div class="ot-sum-row">'
+      +'<span class="ot-sum-lbl">'+toAR(d.fridayDouble)+' دابل ('+toAR(friRawHours)+'×٢)</span>'
+      +'<span class="ot-sum-val">'+toAR(friRawHours)+' ساعة × ٢ = '+fNum(friAmt.toFixed(2))+' جنيه</span>'
+      +'</div>';
+  }
+  var totalEffHoursWithFri = d.otEffHoursWithFriday || 0;
+  if(totalEffHoursWithFri > 0){
+    var effDays = d.otEffDaysWithFriday !== undefined ? d.otEffDaysWithFriday : parseFloat((totalEffHoursWithFri / hoursPerDay).toFixed(2));
+    var dedHours = d.statusDedHours || 0;
+    var dedDays = d.statusDedDays || 0;
+    var netEffHours = d.otEffHoursNet !== undefined ? d.otEffHoursNet : Math.max(0, totalEffHoursWithFri - dedHours);
+    var netEffDays = d.otEffDaysNet !== undefined ? d.otEffDaysNet : parseFloat((netEffHours / hoursPerDay).toFixed(2));
+    html += '<div class="ot-sum-row" style="margin-top:2px">'
+      + '<span class="ot-sum-lbl" style="font-weight:700;color:var(--navy)">توتال الأوفر</span>'
+      + '<span class="ot-sum-val" style="color:var(--navy)">' + toAR(totalEffHoursWithFri) + ' ساعة = ' + toAR(effDays) + ' يوم</span>'
+      + '</div>';
+    html += '<div class="ot-sum-row">'
+      + '<span class="ot-sum-lbl" style="color:var(--red)">خصومات</span>'
+      + '<span class="ot-sum-val" style="color:var(--red)">' + toAR(dedHours) + ' ساعة = ' + toAR(dedDays) + ' أيام</span>'
+      + '</div>';
+    html += '<div style="border-top:1.5px solid var(--border2);margin:5px 0 3px"></div>';
+    html += '<div class="ot-sum-row" style="background:rgba(44,184,122,0.1);border:1.5px solid rgba(44,184,122,0.35);border-radius:8px;padding:8px 10px;margin-top:2px">'
+      + '<span class="ot-sum-lbl" style="font-weight:800;color:var(--green)">✅ الصافي</span>'
+      + '<span class="ot-sum-val" style="color:var(--green);font-weight:800;font-size:13px">' + toAR(netEffHours) + ' ساعة = ' + toAR(netEffDays) + ' يوم</span>'
+      + '</div>';
+  }
+  var totalAmtNet = d.otNetAmount !== undefined ? d.otNetAmount : ((d.otAmount||0) + (d.fridayAmount||0));
+  if(totalAmtNet>0){
+    html+='<div class="ot-sum-row" style="border-top:1.5px solid var(--border2);margin-top:6px;padding-top:8px">'
+      +'<span class="ot-sum-lbl" style="font-weight:700;color:var(--navy)">توتال الإضافات</span>'
+      +'<span class="ot-sum-val">'+fNum(totalAmtNet.toFixed(2))+' جنيه</span>'
+      +'</div>';
+  }
+  html+='</div>';
+  return html;
+}
+
+function loadReport(){
+  if(!S.isAdmin) return;
+  document.getElementById('rep-loading').style.display='block';
+  document.getElementById('rep-content').style.display='none';
+  google.script.run
+    .withSuccessHandler(data=>{
+      document.getElementById('rep-loading').style.display='none';
+      document.getElementById('rep-content').style.display='block';
+      renderReportContent(data);
+    })
+    .withFailureHandler(e=>{document.getElementById('rep-loading').innerHTML=`<p style="color:var(--red)">خطأ: ${e.message}</p>`})
+    .getAllSalaries(repYear, repMonth);
+}
+
+function renderReportContent(data){
+  const totNet=data.reduce((s,r)=>s+Number(r.netSalary||0),0);
+  const totAbs=data.reduce((s,r)=>s+Number(r.absence||0),0);
+  const totOT=data.reduce((s,r)=>s+Number(r.otEffHoursWithFriday||0),0);
+  document.getElementById('rep-stats').innerHTML=[
+    ['sc-blue','👥',toAR(data.length),'عدد الموظفين'],
+    ['sc-red','❌',toAR(totAbs),'إجمالي الغياب'],
+    ['sc-yellow','⏱',toAR(totOT)+' ساعة','إجمالي الأوفر تايم'],
+    ['sc-purple','💰',fNum(totNet)+' جنيه','إجمالي المرتبات'],
+  ].map(([c,ic,v,l])=>`<div class="stat-card ${c}"><div class="stat-icon">${ic}</div><div class="stat-num">${v}</div><div class="stat-label">${l}</div></div>`).join('');
+
+  document.getElementById('rep-tbody').innerHTML=data.map(r=>`<tr>
+    <td style="font-weight:700;color:var(--navy)">${r.name}</td>
+    <td style="color:var(--accent-lt);font-weight:700">${fNum(r.dayRate)} ج</td>
+    <td style="color:var(--accent-lt);font-weight:700">${fNum(r.hourRate)} ج</td>
+    <td><span class="pill p-absent">${toAR(r.absence||0)}</span></td>
+    <td><span class="pill p-annual">${toAR(r.annual||0)}</span></td>
+    <td><span class="pill p-comp">${toAR(r.compensation||0)}</span></td>
+    <td><span class="pill p-ot">${toAR(r.otEffHoursWithFriday||0)} ساعة</span></td>
+    <td style="color:var(--green)">${fNum(r.totalAdditions)} جنيه</td>
+    <td style="color:var(--red)">${toAR(r.statusDedHours||0)} ساعة</td>
+    <td style="font-weight:800;color:var(--accent-lt)">${fNum(r.netSalary)} جنيه</td>
+  </tr>`).join('');
+}
+
+function getPillClass(s){
+  if(s==='Present')return'p-present';if(s==='Absence')return'p-absent';
+  if(s==='Annual')return'p-annual';if(s==='Day Off')return'p-dayoff';
+  if(s==='Compensation')return'p-comp';if(s&&s.includes('Friday'))return'p-friday';
+  if(s&&s.includes('Deduction'))return'p-ded';return'p-empty';
+}
+function statusLabel(s){
+  const m={'Present':'✓ حضور','Absence':'✗ غياب','Annual':'🌴 إجازة Annual','Day Off':'😴 راحة',
+    'Compensation':'🔄 تعويض','Friday + Double Paid':'⭐ دابل',
+    'Deduction 3 day':'📉 خصم ٣','Deduction 2 day':'📉 خصم ٢','Deduction 1 day':'📉 خصم ١','Deduction half day':'📉 خصم نص'};
+  return m[s]||s;
+}
+
+function showPage(name, el, fromMobile){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.sidebar .nav-item').forEach(n=>n.classList.remove('active'));
+  document.querySelectorAll('.bn-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  if(name==='salary') loadSalary();
+  if(name==='report' && S.isAdmin) loadReport();
+}
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; 
+  t.style.display='block';
+  requestAnimationFrame(()=>t.classList.add('show'));
+  clearTimeout(t._t); 
+  t._t=setTimeout(()=>{
+    t.classList.remove('show');
+    setTimeout(()=>t.style.display='none', 300);
+  },2800);
+}
+</script>
+</body>
+</html>
