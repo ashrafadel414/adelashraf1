@@ -593,7 +593,7 @@ function callAppsScript(fnName, args, onSuccess, onFailure, attempt){
       try {
         var res = JSON.parse(xhr.responseText);
         if(res && res.success){ if(onSuccess) onSuccess(res.result); }
-        else { setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 1000); }
+        else { if(onFailure) onFailure({message: (res && res.error) ? res.error : 'حصل خطأ'}); }
       } catch(e) { setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 1000); }
     } else {
       setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 1000);
@@ -692,24 +692,33 @@ function startAutoRefresh(){
 function stopAutoRefresh(){ if(autoRefreshTimer){ clearInterval(autoRefreshTimer); autoRefreshTimer=null; } }
 
 function loadAttendanceSilent(){
-  google.script.run.withSuccessHandler(function(data){
-    if(!data) return;
-    if(selIdx===null){ attData=data; renderAtt(); }
-    else { attData=data; }
-  }).getAttendance(curAttUser, attYear, attMonth);
+  google.script.run
+    .withSuccessHandler(function(data){
+      if(!data) return;
+      if(selIdx===null){ attData=data; renderAtt(); }
+      else { attData=data; }
+    })
+    .withFailureHandler(function(e){ if(isAuthError(e)) forceReLogin(e.message); })
+    .getAttendance(S.token, curAttUser, attYear, attMonth);
 }
 function loadSalarySilent(){
   var salLoading=document.getElementById('sal-loading');
   if(salLoading.style.display!=='none') return;
-  google.script.run.withSuccessHandler(function(res){
-    if(!res || !res.salary) return;
-    renderSalaryContent(res.salary);
-  }).calcSalaryWithLeave(curSalUser, salYear, salMonth);
+  google.script.run
+    .withSuccessHandler(function(res){
+      if(!res || !res.salary) return;
+      renderSalaryContent(res.salary);
+    })
+    .withFailureHandler(function(e){ if(isAuthError(e)) forceReLogin(e.message); })
+    .calcSalaryWithLeave(S.token, curSalUser, salYear, salMonth);
 }
 function loadReportSilent(){
   var repLoading=document.getElementById('rep-loading');
   if(repLoading.style.display!=='none') return;
-  google.script.run.withSuccessHandler(function(data){ if(!data) return; renderReportContent(data); }).getAllSalaries(repYear, repMonth);
+  google.script.run
+    .withSuccessHandler(function(data){ if(!data) return; renderReportContent(data); })
+    .withFailureHandler(function(e){ if(isAuthError(e)) forceReLogin(e.message); })
+    .getAllSalaries(S.token, repYear, repMonth);
 }
 
 function setOTType(panel, type) {
@@ -748,6 +757,21 @@ function calcIndDed(panel){
   else { res.style.display='none'; }
 }
 
+function isAuthError(e){
+  var msg=(e&&e.message)||'';
+  return msg.indexOf('جلسة')!==-1 || msg.indexOf('مصرح')!==-1 || msg.indexOf('دخول')!==-1;
+}
+function forceReLogin(msg){
+  stopAutoRefresh();
+  S={};
+  document.getElementById('app').style.display='none';
+  document.getElementById('login-screen').style.display='flex';
+  document.querySelectorAll('.admin-only').forEach(el=>el.style.display='none');
+  var err=document.getElementById('l-err');
+  err.textContent=msg||'انتهت الجلسة — سجل دخولك تاني';
+  err.style.display='block';
+}
+
 function doLogin(){
   const u=document.getElementById('l-user').value.trim().toLowerCase();
   const p=document.getElementById('l-pass').value.trim();
@@ -759,19 +783,11 @@ function doLogin(){
   btn.disabled=true;
   btn.textContent='⏳ جاري الدخول...';
 
-  // Hard timeout: if backend doesn't respond in 4 seconds, use fallback
+  // لو السيرفر بياخد وقت أطول من المعتاد (Cold start) بنوريه رسالة فقط
+  // من غير أي دخول وهمي أو باسورد مكتوب في الكود
   if(loginTimeout) clearTimeout(loginTimeout);
   loginTimeout = setTimeout(function(){
-    console.log('Login timeout — using fallback');
-    btn.disabled=false;
-    btn.textContent='دخول';
-    if(u==='adel' && p==='2231'){
-      S={success:true,username:'adel',displayName:'Adel',salary:15000,dayRate:500,hourRate:62.5,isAdmin:true};
-      startApp();
-    } else {
-      err.textContent='اسم المستخدم أو كلمة المرور غير صحيحة';
-      err.style.display='block';
-    }
+    btn.textContent='⏳ السيرفر بياخد وقت أطول من المعتاد...';
   }, 4000);
 
   google.script.run
@@ -780,22 +796,16 @@ function doLogin(){
       btn.disabled=false;
       btn.textContent='دخول';
       if(res && res.success){ S=res; startApp(); }
-      else { err.textContent=res&&res.message?res.message:'اسم المستخدم أو كلمة المرور غير صحيحة'; err.style.display='block'; }
+      else { err.textContent=res&&res.msg?res.msg:'اسم المستخدم أو كلمة المرور غير صحيحة'; err.style.display='block'; }
     })
     .withFailureHandler(function(e){
       if(loginTimeout){ clearTimeout(loginTimeout); loginTimeout=null; }
       btn.disabled=false;
       btn.textContent='دخول';
-      console.log('Login backend error:', e);
-      if(u==='adel' && p==='2231'){
-        S={success:true,username:'adel',displayName:'Adel',salary:15000,dayRate:500,hourRate:62.5,isAdmin:true};
-        startApp();
-      } else {
-        err.textContent='❌ خطأ في الاتصال بالخادم';
-        err.style.display='block';
-      }
+      err.textContent='❌ خطأ في الاتصال بالخادم — حاول تاني';
+      err.style.display='block';
     })
-    .verifyCredentials(u, p);
+    .login(u, p);
 }
 
 function startApp(){
@@ -828,6 +838,7 @@ function startApp(){
 
 function logout(){
   stopAutoRefresh();
+  if(S.token){ google.script.run.logout(S.token); }
   S={};
   document.getElementById('login-screen').style.display='flex';
   document.getElementById('app').style.display='none';
@@ -841,11 +852,14 @@ function logout(){
 function loadAnnualLeavePanel(){
   if(!curAttUser) return;
   var year = attYear || new Date().getFullYear();
-  google.script.run.withSuccessHandler(function(al){
-    if(!al) return;
-    var alPanel = document.getElementById('sp-annual-leave');
-    if(alPanel){ alPanel.innerHTML = buildAnnualLeaveCard(al, year); alPanel.style.display = 'block'; }
-  }).getAnnualLeaveSummary(curAttUser, year);
+  google.script.run
+    .withSuccessHandler(function(al){
+      if(!al) return;
+      var alPanel = document.getElementById('sp-annual-leave');
+      if(alPanel){ alPanel.innerHTML = buildAnnualLeaveCard(al, year); alPanel.style.display = 'block'; }
+    })
+    .withFailureHandler(function(e){ if(isAuthError(e)) forceReLogin(e.message); })
+    .getAnnualLeaveSummary(S.token, curAttUser, year);
 }
 
 function updateLabels(){
@@ -884,16 +898,19 @@ function changeRepMonth(dir){
 }
 
 function loadEmpSelectors(){
-  google.script.run.withSuccessHandler(list=>{
-    empList=list;
-    const aS=document.getElementById('att-emp-sel');
-    const sS=document.getElementById('sal-emp-sel');
-    aS.innerHTML=''; sS.innerHTML='';
-    list.forEach(emp=>{
-      aS.innerHTML+=`<button class="emp-btn ${emp.username===curAttUser?'active':''}" onclick="switchAtt('${emp.username}','${emp.displayName}',this)">${emp.displayName}</button>`;
-      sS.innerHTML+=`<button class="emp-btn ${emp.username===curSalUser?'active':''}" onclick="switchSal('${emp.username}',this)">${emp.displayName}</button>`;
-    });
-  }).getEmployeeList();
+  google.script.run
+    .withSuccessHandler(list=>{
+      empList=list;
+      const aS=document.getElementById('att-emp-sel');
+      const sS=document.getElementById('sal-emp-sel');
+      aS.innerHTML=''; sS.innerHTML='';
+      list.forEach(emp=>{
+        aS.innerHTML+=`<button class="emp-btn ${emp.username===curAttUser?'active':''}" onclick="switchAtt('${emp.username}','${emp.displayName}',this)">${emp.displayName}</button>`;
+        sS.innerHTML+=`<button class="emp-btn ${emp.username===curSalUser?'active':''}" onclick="switchSal('${emp.username}',this)">${emp.displayName}</button>`;
+      });
+    })
+    .withFailureHandler(function(e){ if(isAuthError(e)) forceReLogin(e.message); })
+    .getEmployeeList(S.token);
 }
 function switchAtt(u,n,el){
   curAttUser=u;
@@ -918,10 +935,11 @@ function loadAttendance(){
       document.getElementById('att-content').style.display='block';
     })
     .withFailureHandler(e=>{
+      if(isAuthError(e)){ forceReLogin(e.message); return; }
       console.warn('Attendance load failed, will retry automatically...');
       setTimeout(loadAttendance, 3000);
     })
-    .getAttendance(curAttUser, attYear, attMonth);
+    .getAttendance(S.token, curAttUser, attYear, attMonth);
 }
 
 function isToday(d){
@@ -1118,9 +1136,10 @@ function saveDay(){
       isSaving=false;
       document.getElementById('sp-save').disabled=false;
       document.getElementById('sp-save').textContent='💾 حفظ';
+      if(isAuthError(e)){ forceReLogin(e.message); return; }
       toast('❌ '+e.message);
     })
-    .saveAttendanceDay(curAttUser, attYear, attMonth, dayData);
+    .saveAttendanceDay(S.token, curAttUser, attYear, attMonth, dayData);
 }
 
 function saveDayM(){
@@ -1152,9 +1171,10 @@ function saveDayM(){
       isSaving=false;
       document.getElementById('m-sp-save').disabled=false;
       document.getElementById('m-sp-save').textContent='💾 حفظ';
+      if(isAuthError(e)){ forceReLogin(e.message); return; }
       toast('❌ '+e.message);
     })
-    .saveAttendanceDay(curAttUser, attYear, attMonth, dayData);
+    .saveAttendanceDay(S.token, curAttUser, attYear, attMonth, dayData);
 }
 
 function clearDay(){
@@ -1174,8 +1194,13 @@ function clearDay(){
         if(d.status==='Annual') loadAnnualLeavePanel();
       } else toast('❌ خطأ: '+res);
     })
-    .withFailureHandler(e=>{isSaving=false;document.getElementById('sp-save').disabled=false;toast('❌ '+e.message);})
-    .saveAttendanceDay(curAttUser, attYear, attMonth, dayData);
+    .withFailureHandler(e=>{
+      isSaving=false;
+      document.getElementById('sp-save').disabled=false;
+      if(isAuthError(e)){ forceReLogin(e.message); return; }
+      toast('❌ '+e.message);
+    })
+    .saveAttendanceDay(S.token, curAttUser, attYear, attMonth, dayData);
 }
 
 function clearDayM(){
@@ -1191,8 +1216,13 @@ function clearDayM(){
       if(res==='ok'){attData[selIdx]=dayData;toast('🗑️ تم المسح!');closeDrawer();}
       else toast('❌ خطأ: '+res);
     })
-    .withFailureHandler(e=>{isSaving=false;document.getElementById('m-sp-save').disabled=false;toast('❌ '+e.message);})
-    .saveAttendanceDay(curAttUser, attYear, attMonth, dayData);
+    .withFailureHandler(e=>{
+      isSaving=false;
+      document.getElementById('m-sp-save').disabled=false;
+      if(isAuthError(e)){ forceReLogin(e.message); return; }
+      toast('❌ '+e.message);
+    })
+    .saveAttendanceDay(S.token, curAttUser, attYear, attMonth, dayData);
 }
 
 function loadSalary(){
@@ -1208,10 +1238,11 @@ function loadSalary(){
       renderSalaryContent(res.salary);
     })
     .withFailureHandler(e=>{
+      if(isAuthError(e)){ forceReLogin(e.message); return; }
       console.warn('Salary load failed, will retry automatically...');
       setTimeout(loadSalary, 3000);
     })
-    .calcSalaryWithLeave(curSalUser, salYear, salMonth);
+    .calcSalaryWithLeave(S.token, curSalUser, salYear, salMonth);
 }
 
 function buildAnnualLeaveCard(al, year) {
@@ -1380,8 +1411,11 @@ function loadReport(){
       document.getElementById('rep-content').style.display='block';
       renderReportContent(data);
     })
-    .withFailureHandler(e=>{document.getElementById('rep-loading').innerHTML=`<p style="color:var(--red)">خطأ: ${e.message}</p>`})
-    .getAllSalaries(repYear, repMonth);
+    .withFailureHandler(e=>{
+      if(isAuthError(e)){ forceReLogin(e.message); return; }
+      document.getElementById('rep-loading').innerHTML=`<p style="color:var(--red)">خطأ: ${e.message}</p>`
+    })
+    .getAllSalaries(S.token, repYear, repMonth);
 }
 
 function renderReportContent(data){
