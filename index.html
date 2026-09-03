@@ -581,27 +581,72 @@ const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyP3eS_JU8zfwTz
 
 function callAppsScript(fnName, args, onSuccess, onFailure, attempt){
   attempt = attempt || 1;
-  if(attempt > 3){ if(onFailure) onFailure({message:'فشل الاتصال بعد عدة محاولات'}); return; }
-  var payload = btoa(unescape(encodeURIComponent(JSON.stringify({ fn: fnName, args: args }))));
-  var url = APPS_SCRIPT_URL + '?p=' + encodeURIComponent(payload) + '&_=' + Date.now();
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', url, true);
-  xhr.timeout = 8000;
-  xhr.onreadystatechange = function(){
-    if(xhr.readyState !== 4) return;
-    if(xhr.status >= 200 && xhr.status < 300){
-      try {
-        var res = JSON.parse(xhr.responseText);
-        if(res && res.success){ if(onSuccess) onSuccess(res.result); }
-        else { if(onFailure) onFailure({message: (res && res.error) ? res.error : 'حصل خطأ'}); }
-      } catch(e) { setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 1000); }
+  if(attempt > 3){
+    if(onFailure) onFailure({message:'فشل الاتصال بعد عدة محاولات'});
+    return;
+  }
+
+  // GitHub Pages cannot reliably use XHR/fetch against an Apps Script Web App
+  // because of the cross-origin redirect/CORS behavior. JSONP avoids that issue.
+  var payload = btoa(unescape(encodeURIComponent(JSON.stringify({
+    fn: fnName,
+    args: args
+  }))));
+
+  var callbackName = '__gs_cb_' + Date.now() + '_' +
+                     Math.random().toString(36).slice(2);
+
+  var script = document.createElement('script');
+  var finished = false;
+
+  function cleanup(){
+    if(script.parentNode) script.parentNode.removeChild(script);
+    try { delete window[callbackName]; } catch(e) { window[callbackName] = undefined; }
+  }
+
+  function retry(){
+    cleanup();
+    setTimeout(function(){
+      callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1);
+    }, 700);
+  }
+
+  window[callbackName] = function(res){
+    if(finished) return;
+    finished = true;
+    clearTimeout(timer);
+    cleanup();
+
+    if(res && res.success){
+      if(onSuccess) onSuccess(res.result);
     } else {
-      setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 1000);
+      if(onFailure){
+        onFailure({
+          message: (res && res.error) ? res.error : 'حصل خطأ من الخادم'
+        });
+      }
     }
   };
-  xhr.onerror = function(){ setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 1000); };
-  xhr.ontimeout = function(){ setTimeout(function(){ callAppsScript(fnName, args, onSuccess, onFailure, attempt + 1); }, 1000); };
-  xhr.send();
+
+  script.onerror = function(){
+    if(finished) return;
+    finished = true;
+    clearTimeout(timer);
+    retry();
+  };
+
+  var timer = setTimeout(function(){
+    if(finished) return;
+    finished = true;
+    retry();
+  }, 10000);
+
+  script.src = APPS_SCRIPT_URL +
+    '?p=' + encodeURIComponent(payload) +
+    '&callback=' + encodeURIComponent(callbackName) +
+    '&_=' + Date.now();
+
+  document.head.appendChild(script);
 }
 
 function createGsRunner(successCb, failureCb){
